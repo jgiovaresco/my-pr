@@ -1,12 +1,9 @@
 package fr.mypr.controller;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -14,14 +11,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ViewResolver;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -40,15 +33,9 @@ public class IndexControllerTest
 		@Bean
 		public ViewResolver viewResolver()
 		{
-			ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-			templateResolver.setTemplateMode("XHTML");
-			templateResolver.setPrefix("templates/");
-			templateResolver.setSuffix(".html");
-
-			SpringTemplateEngine engine = new SpringTemplateEngine();
-			engine.setTemplateResolver(templateResolver);
-			ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-			viewResolver.setTemplateEngine(engine);
+			InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+			viewResolver.setPrefix("templates/");
+			viewResolver.setSuffix(".html");
 			return viewResolver;
 		}
 	}
@@ -66,7 +53,8 @@ public class IndexControllerTest
 		mockMvc.perform(get("/"))
 //				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(content().string(containsString("Welcome to <span>My PR</span>")));
+				.andExpect(view().name("index"))
+				.andExpect(forwardedUrl("templates/index.html"));
 	}
 
 }
