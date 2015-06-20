@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>My PR</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+	<div>
+		<form id="login" th:action="@{/login/authenticate}" method="post">
+			<p th:if="${(null != param.error) and (param.error[0] eq 'bad_credentials')}">
+				Your sign in information was incorrect.
+				Please try again.
+			</p>
+			<fieldset>
+				<label for="email">Email</label>
+				<input id="email" name="email" type="text" size="25"/>
+				<label for="password">Password</label>
+				<input id="password" name="password" type="password" size="25"/>
+			</fieldset>
+			<button type="submit">Log In</button>
+		</form>
+	</div>
+</body>
+</html>

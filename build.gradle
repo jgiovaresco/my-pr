@@ -30,9 +30,18 @@ repositories {
 
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+    compile('org.projectlombok:lombok:1.16.2')
+    runtime('com.h2database:h2')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('eu.codearte.catch-exception:catch-exception:1.4.4')
+    testCompile('org.assertj:assertj-core:3.0.0')
 }
 
 
