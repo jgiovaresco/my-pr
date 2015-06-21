@@ -1,12 +1,21 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">>
 <head>
 	<title>My PR</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-	<h1>Welcome to <span th:text="${name}">my-pr</span></h1>
+	<header>
+		Header
+	</header>
 
-	<p>This application allows you to register yours Personal Records.</p>
+	<div layout:fragment="content">
+		<h1>Welcome to <span th:text="${name}">my-pr</span></h1>
+
+		<p>This application allows you to register yours Personal Records.</p>
+	</div>
 </body>
 </html>

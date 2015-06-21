@@ -22,9 +22,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	{
 		// @formatter:off
 		web
-			//Spring Security ignores request to static resources such as CSS or JS files.
 			.ignoring()
-				.antMatchers("/static/**");
+				.antMatchers("/css/**", "/js/**", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.jpg");
 		// @formatter:on
 	}
 
@@ -44,11 +43,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 				.logout()
 					.deleteCookies("JSESSIONID")
 					.logoutUrl("/logout")
-					.logoutSuccessUrl("/login")
+					.logoutSuccessUrl("/")
 			.and()
 				.authorizeRequests()
 					.antMatchers(
-							"/login"
+							"/", "/login"
 					).permitAll()
 					.antMatchers("/**").hasRole("USER")
 			;

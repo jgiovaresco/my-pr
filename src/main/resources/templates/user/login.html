@@ -1,24 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
 <head>
 	<title>My PR</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-	<div>
-		<form id="login" th:action="@{/login/authenticate}" method="post">
-			<p th:if="${(null != param.error) and (param.error[0] eq 'bad_credentials')}">
-				Your sign in information was incorrect.
-				Please try again.
-			</p>
-			<fieldset>
-				<label for="email">Email</label>
-				<input id="email" name="email" type="text" size="25"/>
-				<label for="password">Password</label>
-				<input id="password" name="password" type="password" size="25"/>
-			</fieldset>
-			<button type="submit">Log In</button>
-		</form>
+	<header>
+		Header
+	</header>
+
+	<div layout:fragment="content">
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h2>Login by using your user account</h2>
+
+				<div class="alert alert-danger alert-dismissable"
+				     th:if="${(null != param.error) and (param.error[0] eq 'bad_credentials')}">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					Your sign in information was incorrect.
+					Please try again.
+				</div>
+				<form th:action="@{/login/authenticate}" method="post" role="form">
+					<div class="row">
+						<div id="form-group-email" class="form-group col-lg-4">
+							<label for="email" class="control-label">Email</label>
+							<input id="email" name="email" type="text" size="25" class="form-control"/>
+						</div>
+					</div>
+					<div class="row">
+						<div id="form-group-password" class="form-group col-lg-4">
+							<label for="password" class="control-label">Password</label>
+							<input id="password" name="password" type="password" size="25" class="form-control"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-lg-4">
+							<button type="submit" class="btn btn-default">Log In</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

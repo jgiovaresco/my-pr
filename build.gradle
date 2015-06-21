@@ -35,9 +35,11 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-devtools')
 
     compile('org.projectlombok:lombok:1.16.2')
     runtime('com.h2database:h2')
+    runtime("org.thymeleaf.extras:thymeleaf-extras-springsecurity4")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('eu.codearte.catch-exception:catch-exception:1.4.4')
