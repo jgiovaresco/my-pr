@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @ToString
 @Entity
-@Table(name = "user_accounts")
+@Table(name = "user_account")
 public class UserAccount extends BaseEntity<Long>
 {
 	@Id
