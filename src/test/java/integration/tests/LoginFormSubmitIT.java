@@ -1,14 +1,18 @@
-package fr.mypr.security.controller;
+package integration.tests;
 
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import fr.mypr.*;
-import fr.mypr.rule.InitUserAccountRule;
+import integration.IntegrationTestConstants;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.web.FilterChainProxy;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.*;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.*;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -21,17 +25,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {MyPrApplication.class})
 @WebAppConfiguration
-public class FormLoginIT
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
+                         TransactionalTestExecutionListener.class,
+                         DbUnitTestExecutionListener.class})
+@DatabaseSetup("users.xml")
+
+public class LoginFormSubmitIT
 {
 	private static final String NOT_FOUND_USER = "not@found.com";
 	private static final String INVALID_PASSWORD = "invalidPassword";
 
 	private static final String REQUEST_PARAM_EMAIL = "email";
 	private static final String REQUEST_PARAM_PASSWORD = "password";
-
-	@Rule
-	@Autowired
-	public InitUserAccountRule initUserAccountRule;
 
 	@Autowired
 	private FilterChainProxy springSecurityFilterChain;

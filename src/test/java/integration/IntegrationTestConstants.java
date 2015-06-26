@@ -1,4 +1,4 @@
-package fr.mypr;
+package integration;
 
 public class IntegrationTestConstants
 {

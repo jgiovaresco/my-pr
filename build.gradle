@@ -22,20 +22,12 @@ jar {
     version = '0.0.1-SNAPSHOT'
 }
 
-sourceSets {
-    integrationTest {
-        java.srcDir file('src/it/java')
-        resources.srcDir file('src/it/resources')
-    }
-}
-
 
 repositories {
     mavenCentral()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
 }
-
 
 dependencies {
 
@@ -53,21 +45,16 @@ dependencies {
     testCompile('org.springframework.security:spring-security-test')
     testCompile('eu.codearte.catch-exception:catch-exception:1.4.4')
     testCompile('org.assertj:assertj-core:3.0.0')
-    testCompile('com.ninja-squad:DbSetup:1.5.0')
-}
 
+    testCompile('com.github.springtestdbunit:spring-test-dbunit:1.2.1')
+    testCompile('org.dbunit:dbunit:2.5.1')
+}
 
 eclipse {
     classpath {
         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
     }
-}
-
-
-task integTest(type: Test) {
-    testClassesDir = sourceSets.integrationTest.output.classesDir
-    classpath = sourceSets.integrationTest.runtimeClasspath
 }
 
 task wrapper(type: Wrapper) {
