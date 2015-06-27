@@ -45,6 +45,7 @@ dependencies {
     testCompile('org.springframework.security:spring-security-test')
     testCompile('eu.codearte.catch-exception:catch-exception:1.4.4')
     testCompile('org.assertj:assertj-core:3.0.0')
+    testCompile('org.apache.commons:commons-lang3:3.4')
 
     testCompile('com.github.springtestdbunit:spring-test-dbunit:1.2.1')
     testCompile('org.dbunit:dbunit:2.5.1')
