@@ -18,10 +18,7 @@ import javax.validation.Valid;
 @Slf4j
 public class RegistrationController
 {
-	public static final String MODEL_ATTRIBUTE_USER_FORM = "user";
-	public static final String SESSION_ATTRIBUTE_USER_FORM = "user";
-
-	protected static final String ERROR_CODE_EMAIL_EXIST = "NotExist.user.email";
+	protected static final String ERROR_CODE_EMAIL_EXIST = "Email already exists";
 	protected static final String VIEW_NAME_REGISTRATION_PAGE = "user/registrationForm";
 
 	private RegistrationService registrationService;
@@ -43,7 +40,7 @@ public class RegistrationController
 		RegistrationForm registration = RegistrationForm.builder().build();
 		log.debug("Rendering registration form with information: {}", registration);
 
-		model.addAttribute(MODEL_ATTRIBUTE_USER_FORM, registration);
+		model.addAttribute(RegistrationForm.MODEL_ATTRIBUTE_USER_FORM, registration);
 
 		return VIEW_NAME_REGISTRATION_PAGE;
 	}
@@ -65,7 +62,7 @@ public class RegistrationController
 
 		log.debug("No validation errors found. Continuing registration process.");
 
-		UserAccount registered = null;
+		UserAccount registered;
 		try
 		{
 			registered = createUserAccount(userAccountData, result);
@@ -87,31 +84,30 @@ public class RegistrationController
 	private UserAccount createUserAccount(RegistrationForm userAccountData, BindingResult result)
 	{
 		log.debug("Creating user account with information: {}", userAccountData);
-		UserAccount registered = null;
+		UserAccount registered;
 
-		try {
+		try
+		{
 			registered = registrationService.registerNewUserAccount(userAccountData);
 		}
-		catch (DuplicateEmailException ex) {
+		catch (DuplicateEmailException ex)
+		{
 			log.debug("An email address: {} exists.", userAccountData.getEmail());
 			addFieldError(
-					MODEL_ATTRIBUTE_USER_FORM,
+					RegistrationForm.MODEL_ATTRIBUTE_USER_FORM,
 					RegistrationForm.FIELD_NAME_EMAIL,
 					userAccountData.getEmail(),
 					ERROR_CODE_EMAIL_EXIST,
 					result);
+			throw ex;
 		}
 
 		return registered;
 	}
 
-	private void addFieldError(String objectName, String fieldName, String fieldValue,  String errorCode, BindingResult result) {
-		log.debug(
-				"Adding field error object's: {} field: {} with error code: {}",
-				objectName,
-				fieldName,
-				errorCode
-		);
+	private void addFieldError(String objectName, String fieldName, String fieldValue, String errorCode, BindingResult result)
+	{
+		log.debug("Adding field error object's: {} field: {} with error code: {}", objectName, fieldName, errorCode);
 		FieldError error = new FieldError(
 				objectName,
 				fieldName,

@@ -1,5 +1,6 @@
 package fr.mypr.user.registration;
 
+import fr.mypr.user.registration.validation.*;
 import lombok.*;
 import org.hibernate.validator.constraints.*;
 
@@ -10,6 +11,14 @@ import javax.validation.constraints.Size;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@PasswordsNotEmpty(
+		passwordFieldName = "password",
+		passwordVerificationFieldName = "passwordVerification"
+)
+@PasswordsNotEqual(
+		passwordFieldName = "password",
+		passwordVerificationFieldName = "passwordVerification"
+)
 public class RegistrationForm
 {
 

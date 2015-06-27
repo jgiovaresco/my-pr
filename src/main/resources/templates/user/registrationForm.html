@@ -42,14 +42,14 @@
 					<div class="row">
 						<div id="form-group-password" class="form-group col-lg-4">
 							<label class="control-label" for="user-password">Password</label>
-							<input id="user-password" th:field="*{password}" class="form-control"/>
+							<input type="password" id="user-password" th:field="*{password}" class="form-control"/>
 							<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert">Password Error</p>
 						</div>
 					</div>
 					<div class="row">
 						<div id="form-group-passwordVerification" class="form-group col-lg-4">
 							<label class="control-label" for="user-passwordVerification">Password verification</label>
-							<input id="user-passwordVerification" th:field="*{passwordVerification}" class="form-control"/>
+							<input type="password" id="user-passwordVerification" th:field="*{passwordVerification}" class="form-control"/>
 							<p th:if="${#fields.hasErrors('passwordVerification')}" th:errors="*{passwordVerification}" class="alert">Password verification Error</p>
 						</div>
 					</div>

@@ -1,6 +1,7 @@
 package fr.mypr.user.registration.controller;
 
 import fr.mypr.*;
+import fr.mypr.config.WebConfiguration;
 import fr.mypr.security.util.SecurityContextAssert;
 import fr.mypr.user.model.UserAccount;
 import fr.mypr.user.registration.*;
@@ -9,7 +10,6 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {UnitTestContext.class, WebContext.class})
+@ContextConfiguration(classes = {UnitTestWebConfiguration.class, WebConfiguration.class})
 @WebAppConfiguration
 public class RegistrationControllerTest
 {
@@ -53,6 +53,7 @@ public class RegistrationControllerTest
 		Mockito.reset(registrationServiceMock);
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+
 				.build();
 
 		SecurityContextHolder.getContext().setAuthentication(null);
@@ -224,7 +225,6 @@ public class RegistrationControllerTest
 		)
 				.andExpect(status().isOk())
 				.andExpect(view().name("user/registrationForm"))
-				.andExpect(forwardedUrl("/WEB-INF/jsp/user/registrationForm.jsp"))
 				.andExpect(model().attribute(RegistrationForm.MODEL_ATTRIBUTE_USER_FORM, allOf(
 						hasProperty(RegistrationForm.FIELD_NAME_EMAIL, is(MALFORMED_EMAIL)),
 						hasProperty(RegistrationForm.FIELD_NAME_FIRST_NAME, is(FIRST_NAME)),
@@ -261,7 +261,7 @@ public class RegistrationControllerTest
 				                .param(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, PASSWORD)
 				                .sessionAttr(RegistrationForm.SESSION_ATTRIBUTE_USER_FORM, new RegistrationForm())
 		)
-				.andExpect(status().isMovedTemporarily())
+				.andExpect(status().isFound())
 				.andExpect(redirectedUrl("/"));
 
 		SecurityContextAssert.assertThat(SecurityContextHolder.getContext())
