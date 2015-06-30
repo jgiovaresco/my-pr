@@ -37,7 +37,7 @@ public class RegistrationControllerTest
 	private static final String FIRST_NAME = "John";
 	private static final String LAST_NAME = "Smith";
 	private static final String PASSWORD = "password";
-	private static final String PASSWORD_VERIFICATION = "passwordVerification";
+	private static final String PASSWORD_VERIFICATION = "confirmPassword";
 
 	private MockMvc mockMvc;
 
@@ -53,7 +53,6 @@ public class RegistrationControllerTest
 		Mockito.reset(registrationServiceMock);
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-
 				.build();
 
 		SecurityContextHolder.getContext().setAuthentication(null);
@@ -70,7 +69,7 @@ public class RegistrationControllerTest
 						hasProperty(RegistrationForm.FIELD_NAME_FIRST_NAME, isEmptyOrNullString()),
 						hasProperty(RegistrationForm.FIELD_NAME_LAST_NAME, isEmptyOrNullString()),
 						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD, isEmptyOrNullString()),
-						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, isEmptyOrNullString())
+						hasProperty(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, isEmptyOrNullString())
 				)));
 
 		verifyZeroInteractions(registrationServiceMock);
@@ -90,7 +89,7 @@ public class RegistrationControllerTest
 						hasProperty(RegistrationForm.FIELD_NAME_FIRST_NAME, isEmptyOrNullString()),
 						hasProperty(RegistrationForm.FIELD_NAME_LAST_NAME, isEmptyOrNullString()),
 						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD, isEmptyOrNullString()),
-						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, isEmptyOrNullString())
+						hasProperty(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, isEmptyOrNullString())
 				)))
 				.andExpect(model().attributeHasFieldErrors(
 						RegistrationForm.MODEL_ATTRIBUTE_USER_FORM,
@@ -98,7 +97,7 @@ public class RegistrationControllerTest
 						RegistrationForm.FIELD_NAME_FIRST_NAME,
 						RegistrationForm.FIELD_NAME_LAST_NAME,
 						RegistrationForm.FIELD_NAME_PASSWORD,
-						RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION
+						RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD
 				));
 
 		SecurityContextAssert.assertThat(SecurityContextHolder.getContext()).userIsAnonymous();
@@ -118,7 +117,7 @@ public class RegistrationControllerTest
 				                .param(RegistrationForm.FIELD_NAME_FIRST_NAME, firstName)
 				                .param(RegistrationForm.FIELD_NAME_LAST_NAME, lastName)
 				                .param(RegistrationForm.FIELD_NAME_PASSWORD, PASSWORD)
-				                .param(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, PASSWORD)
+				                .param(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, PASSWORD)
 				                .sessionAttr(RegistrationForm.SESSION_ATTRIBUTE_USER_FORM, new RegistrationForm())
 		)
 				.andExpect(status().isOk())
@@ -128,7 +127,7 @@ public class RegistrationControllerTest
 						hasProperty(RegistrationForm.FIELD_NAME_FIRST_NAME, is(firstName)),
 						hasProperty(RegistrationForm.FIELD_NAME_LAST_NAME, is(lastName)),
 						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD, is(PASSWORD)),
-						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, is(PASSWORD))
+						hasProperty(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, is(PASSWORD))
 				)))
 				.andExpect(model().attributeHasFieldErrors(RegistrationForm.MODEL_ATTRIBUTE_USER_FORM,
 				                                           RegistrationForm.FIELD_NAME_EMAIL,
@@ -149,7 +148,7 @@ public class RegistrationControllerTest
 				                .param(RegistrationForm.FIELD_NAME_FIRST_NAME, FIRST_NAME)
 				                .param(RegistrationForm.FIELD_NAME_LAST_NAME, LAST_NAME)
 				                .param(RegistrationForm.FIELD_NAME_PASSWORD, PASSWORD)
-				                .param(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, PASSWORD_VERIFICATION)
+				                .param(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, PASSWORD_VERIFICATION)
 				                .sessionAttr(RegistrationForm.SESSION_ATTRIBUTE_USER_FORM, new RegistrationForm())
 		)
 				.andExpect(status().isOk())
@@ -159,7 +158,7 @@ public class RegistrationControllerTest
 						hasProperty(RegistrationForm.FIELD_NAME_FIRST_NAME, is(FIRST_NAME)),
 						hasProperty(RegistrationForm.FIELD_NAME_LAST_NAME, is(LAST_NAME)),
 						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD, is(PASSWORD)),
-						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, is(PASSWORD_VERIFICATION))
+						hasProperty(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, is(PASSWORD_VERIFICATION))
 				)))
 				.andExpect(model().attributeHasFieldErrors(RegistrationForm.MODEL_ATTRIBUTE_USER_FORM,
 				                                           RegistrationForm.FIELD_NAME_PASSWORD,
@@ -182,7 +181,7 @@ public class RegistrationControllerTest
 				                .param(RegistrationForm.FIELD_NAME_FIRST_NAME, FIRST_NAME)
 				                .param(RegistrationForm.FIELD_NAME_LAST_NAME, LAST_NAME)
 				                .param(RegistrationForm.FIELD_NAME_PASSWORD, PASSWORD)
-				                .param(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, PASSWORD)
+				                .param(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, PASSWORD)
 				                .sessionAttr(RegistrationForm.SESSION_ATTRIBUTE_USER_FORM, new RegistrationForm())
 		)
 				.andExpect(status().isOk())
@@ -208,7 +207,7 @@ public class RegistrationControllerTest
 				.hasFirstName(FIRST_NAME)
 				.hasLastName(LAST_NAME)
 				.hasPassword(PASSWORD)
-				.hasPasswordVerification(PASSWORD);
+				.hasConfirmPassword(PASSWORD);
 	}
 
 	@Test
@@ -220,7 +219,7 @@ public class RegistrationControllerTest
 				                .param(RegistrationForm.FIELD_NAME_FIRST_NAME, FIRST_NAME)
 				                .param(RegistrationForm.FIELD_NAME_LAST_NAME, LAST_NAME)
 				                .param(RegistrationForm.FIELD_NAME_PASSWORD, PASSWORD)
-				                .param(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, PASSWORD)
+				                .param(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, PASSWORD)
 				                .sessionAttr(RegistrationForm.SESSION_ATTRIBUTE_USER_FORM, new RegistrationForm())
 		)
 				.andExpect(status().isOk())
@@ -258,7 +257,7 @@ public class RegistrationControllerTest
 				                .param(RegistrationForm.FIELD_NAME_FIRST_NAME, FIRST_NAME)
 				                .param(RegistrationForm.FIELD_NAME_LAST_NAME, LAST_NAME)
 				                .param(RegistrationForm.FIELD_NAME_PASSWORD, PASSWORD)
-				                .param(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, PASSWORD)
+				                .param(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, PASSWORD)
 				                .sessionAttr(RegistrationForm.SESSION_ATTRIBUTE_USER_FORM, new RegistrationForm())
 		)
 				.andExpect(status().isFound())
@@ -278,7 +277,7 @@ public class RegistrationControllerTest
 				.hasFirstName(FIRST_NAME)
 				.hasLastName(LAST_NAME)
 				.hasPassword(PASSWORD)
-				.hasPasswordVerification(PASSWORD);
+				.hasConfirmPassword(PASSWORD);
 	}
 
 }

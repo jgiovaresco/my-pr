@@ -13,11 +13,11 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @PasswordsNotEmpty(
 		passwordFieldName = "password",
-		passwordVerificationFieldName = "passwordVerification"
+		passwordVerificationFieldName = "confirmPassword"
 )
 @PasswordsNotEqual(
 		passwordFieldName = "password",
-		passwordVerificationFieldName = "passwordVerification"
+		passwordVerificationFieldName = "confirmPassword"
 )
 public class RegistrationForm
 {
@@ -26,7 +26,7 @@ public class RegistrationForm
 	public static final String FIELD_NAME_FIRST_NAME = "firstName";
 	public static final String FIELD_NAME_LAST_NAME = "lastName";
 	public static final String FIELD_NAME_PASSWORD = "password";
-	public static final String FIELD_NAME_PASSWORD_VERIFICATION = "passwordVerification";
+	public static final String FIELD_NAME_CONFIRM_PASSWORD = "confirmPassword";
 
 	public static final String MODEL_ATTRIBUTE_USER_FORM = "user";
 	public static final String SESSION_ATTRIBUTE_USER_FORM = "user";
@@ -46,5 +46,5 @@ public class RegistrationForm
 
 	private String password;
 
-	private String passwordVerification;
+	private String confirmPassword;
 }

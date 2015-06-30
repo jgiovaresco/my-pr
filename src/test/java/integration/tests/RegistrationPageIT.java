@@ -14,8 +14,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles({"integrationTest"})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,9 +43,9 @@ public class RegistrationPageIT
 	public void register_url_should_render_register_form_view() throws Exception
 	{
 		mockMvc.perform(get("/register"))
-//				.andDo(print())
-				.andExpect(status().isOk())
-				.andExpect(view().name("user/register"));
+				.andDo(print())
+				.andExpect(status().isFound())
+				.andExpect(redirectedUrl("/user/register"));
 	}
 
 }

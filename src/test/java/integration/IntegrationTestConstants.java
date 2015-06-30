@@ -8,11 +8,13 @@ public class IntegrationTestConstants
 
 		private String email;
 		private String password;
+		private String firstName;
 
 		User(String email, String password)
 		{
 			this.email = email;
 			this.password = password;
+			this.firstName = "John";
 		}
 
 		public String getEmail()
@@ -23,6 +25,11 @@ public class IntegrationTestConstants
 		public String getPassword()
 		{
 			return password;
+		}
+
+		public String getFirstName()
+		{
+			return firstName;
 		}
 	}
 }

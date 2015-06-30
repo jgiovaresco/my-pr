@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       layout:decorator="layout">>
 <head>
 	<title>My PR</title>
@@ -13,7 +14,7 @@
 	</header>
 
 	<div layout:fragment="content">
-		<h1>Welcome to <span th:text="${name}">my-pr</span></h1>
+		<h1>Welcome <span sec:authorize="isAuthenticated()"  sec:authentication="principal.firstName"></span> to <span th:text="${name}">my-pr</span></h1>
 
 		<p>This application allows you to register yours Personal Records.</p>
 	</div>

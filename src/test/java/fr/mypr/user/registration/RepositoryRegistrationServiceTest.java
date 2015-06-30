@@ -48,7 +48,7 @@ public class RepositoryRegistrationServiceTest
 				.firstName(FIRST_NAME)
 				.lastName(LAST_NAME)
 				.password(PASSWORD)
-				.passwordVerification(PASSWORD)
+				.confirmPassword(PASSWORD)
 				.build();
 
 		when(repositoryMock.findByEmail(EMAIL)).thenReturn(Optional.<UserAccount>empty());
@@ -85,7 +85,7 @@ public class RepositoryRegistrationServiceTest
 				.firstName(FIRST_NAME)
 				.lastName(LAST_NAME)
 				.password(PASSWORD)
-				.passwordVerification(PASSWORD)
+				.confirmPassword(PASSWORD)
 				.build();
 
 		when(repositoryMock.findByEmail(EMAIL)).thenReturn(Optional.of(new UserAccount()));

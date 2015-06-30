@@ -23,7 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		// @formatter:off
 		web
 			.ignoring()
-				.antMatchers("/css/**", "/js/**", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.jpg");
+				.antMatchers("/css/**", "/js/**", "/fonts/**", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.jpg");
 		// @formatter:on
 	}
 
@@ -47,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			.and()
 				.authorizeRequests()
 					.antMatchers(
-							"/", "/login", "/user/register/**"
+							"/", "/login", "/register", "/user/register/**"
 					).permitAll()
 					.antMatchers("/**").hasRole("USER")
 			;

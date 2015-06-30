@@ -2,7 +2,6 @@ package integration.tests;
 
 import com.github.springtestdbunit.annotation.*;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
-import common.RegistrationFormConstants;
 import fr.mypr.MyPrApplication;
 import fr.mypr.user.registration.RegistrationForm;
 import org.junit.*;
@@ -61,7 +60,7 @@ public class RegistrationFormSubmitIT
 						hasProperty("firstName", isEmptyOrNullString()),
 						hasProperty("lastName", isEmptyOrNullString()),
 						hasProperty("password", isEmptyOrNullString()),
-						hasProperty("passwordVerification", isEmptyOrNullString())
+						hasProperty("confirmPassword", isEmptyOrNullString())
 				)));
 	}
 
@@ -81,7 +80,7 @@ public class RegistrationFormSubmitIT
 						hasProperty(RegistrationForm.FIELD_NAME_FIRST_NAME, isEmptyOrNullString()),
 						hasProperty(RegistrationForm.FIELD_NAME_LAST_NAME, isEmptyOrNullString()),
 						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD, isEmptyOrNullString()),
-						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION, isEmptyOrNullString())
+						hasProperty(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, isEmptyOrNullString())
 				)))
 				.andExpect(model().attributeHasFieldErrors(
 						RegistrationForm.MODEL_ATTRIBUTE_USER_FORM,
@@ -89,7 +88,7 @@ public class RegistrationFormSubmitIT
 						RegistrationForm.FIELD_NAME_FIRST_NAME,
 						RegistrationForm.FIELD_NAME_LAST_NAME,
 						RegistrationForm.FIELD_NAME_PASSWORD,
-						RegistrationForm.FIELD_NAME_PASSWORD_VERIFICATION
+						RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD
 				));
 	}
 

@@ -13,7 +13,7 @@ public class PasswordsNotEqualValidatorTest
 {
 
 	private static final String PASSWORD = "password";
-	private static final String PASSWORD_VERIFICATION = "passwordVerification";
+	private static final String PASSWORD_VERIFICATION = "confirmPassword";
 
 	private Validator validator;
 
@@ -36,13 +36,13 @@ public class PasswordsNotEqualValidatorTest
 	public void passwordsNotEqual_PasswordIsNull_ShouldReturnValidationErrorsForBothFields()
 	{
 		Pojo failsValidation = Pojo.builder()
-				.passwordVerification(PASSWORD_VERIFICATION)
+				.confirmPassword(PASSWORD_VERIFICATION)
 				.build();
 
 		assertThat(validator.validate(failsValidation))
 				.numberOfValidationErrorsIs(2)
 				.hasValidationErrorForField("password")
-				.hasValidationErrorForField("passwordVerification");
+				.hasValidationErrorForField("confirmPassword");
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class PasswordsNotEqualValidatorTest
 		assertThat(validator.validate(failsValidation))
 				.numberOfValidationErrorsIs(2)
 				.hasValidationErrorForField("password")
-				.hasValidationErrorForField("passwordVerification");
+				.hasValidationErrorForField("confirmPassword");
 	}
 
 	@Test
@@ -63,7 +63,7 @@ public class PasswordsNotEqualValidatorTest
 	{
 		Pojo passesValidation = Pojo.builder()
 				.password("")
-				.passwordVerification("")
+				.confirmPassword("")
 				.build();
 
 		assertThat(validator.validate(passesValidation)).hasNoValidationErrors();
@@ -74,13 +74,13 @@ public class PasswordsNotEqualValidatorTest
 	{
 		Pojo failsValidation = Pojo.builder()
 				.password("")
-				.passwordVerification(PASSWORD_VERIFICATION)
+				.confirmPassword(PASSWORD_VERIFICATION)
 				.build();
 
 		assertThat(validator.validate(failsValidation))
 				.numberOfValidationErrorsIs(2)
 				.hasValidationErrorForField("password")
-				.hasValidationErrorForField("passwordVerification");
+				.hasValidationErrorForField("confirmPassword");
 	}
 
 	@Test
@@ -88,13 +88,13 @@ public class PasswordsNotEqualValidatorTest
 	{
 		Pojo failsValidation = Pojo.builder()
 				.password(PASSWORD)
-				.passwordVerification("")
+				.confirmPassword("")
 				.build();
 
 		assertThat(validator.validate(failsValidation))
 				.numberOfValidationErrorsIs(2)
 				.hasValidationErrorForField("password")
-				.hasValidationErrorForField("passwordVerification");
+				.hasValidationErrorForField("confirmPassword");
 	}
 
 	@Test
@@ -102,13 +102,13 @@ public class PasswordsNotEqualValidatorTest
 	{
 		Pojo failsValidation = Pojo.builder()
 				.password(PASSWORD)
-				.passwordVerification(PASSWORD_VERIFICATION)
+				.confirmPassword(PASSWORD_VERIFICATION)
 				.build();
 
 		assertThat(validator.validate(failsValidation))
 				.numberOfValidationErrorsIs(2)
 				.hasValidationErrorForField("password")
-				.hasValidationErrorForField("passwordVerification");
+				.hasValidationErrorForField("confirmPassword");
 	}
 
 	@Test
@@ -116,7 +116,7 @@ public class PasswordsNotEqualValidatorTest
 	{
 		Pojo passesValidation = Pojo.builder()
 				.password(PASSWORD)
-				.passwordVerification(PASSWORD)
+				.confirmPassword(PASSWORD)
 				.build();
 
 		assertThat(validator.validate(passesValidation)).hasNoValidationErrors();
@@ -143,28 +143,28 @@ public class PasswordsNotEqualValidatorTest
 	@Builder
 	@PasswordsNotEqual(
 			passwordFieldName = "password",
-			passwordVerificationFieldName = "passwordVerification"
+			passwordVerificationFieldName = "confirmPassword"
 	)
 	static class Pojo
 	{
 
 		private String password;
-		private String passwordVerification;
+		private String confirmPassword;
 
 	}
 
 	@PasswordsNotEqual(
 			passwordFieldName = "password",
-			passwordVerificationFieldName = "passwordVerification"
+			passwordVerificationFieldName = "confirmPassword"
 	)
 	class InvalidPasswordFieldDTO
 	{
-		private String passwordVerification;
+		private String confirmPassword;
 	}
 
 	@PasswordsNotEqual(
 			passwordFieldName = "password",
-			passwordVerificationFieldName = "passwordVerification"
+			passwordVerificationFieldName = "confirmPassword"
 	)
 	private class InvalidPasswordVerificationFieldDTO
 	{

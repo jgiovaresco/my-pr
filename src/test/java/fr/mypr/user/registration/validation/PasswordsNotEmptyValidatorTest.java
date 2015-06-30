@@ -13,7 +13,7 @@ public class PasswordsNotEmptyValidatorTest
 {
 
 	private static final String PASSWORD = "password";
-	private static final String PASSWORD_VERIFICATION = "passwordVerification";
+	private static final String PASSWORD_VERIFICATION = "confirmPassword";
 
 	private Validator validator;
 
@@ -29,7 +29,7 @@ public class PasswordsNotEmptyValidatorTest
 	{
 		Pojo passesValidation = Pojo.builder()
 				.password(PASSWORD)
-				.passwordVerification(PASSWORD_VERIFICATION)
+				.confirmPassword(PASSWORD_VERIFICATION)
 				.build();
 
 		assertThat(validator.validate(passesValidation)).hasNoValidationErrors();
@@ -39,7 +39,7 @@ public class PasswordsNotEmptyValidatorTest
 	public void validate_should_return_validation_error_for_password_field_when_password_field_is_null()
 	{
 		Pojo failsValidation = Pojo.builder()
-				.passwordVerification(PASSWORD_VERIFICATION)
+				.confirmPassword(PASSWORD_VERIFICATION)
 				.build();
 
 		assertThat(validator.validate(failsValidation))
@@ -52,7 +52,7 @@ public class PasswordsNotEmptyValidatorTest
 	{
 		Pojo failsValidation = Pojo.builder()
 				.password("")
-				.passwordVerification(PASSWORD_VERIFICATION)
+				.confirmPassword(PASSWORD_VERIFICATION)
 				.build();
 
 		assertThat(validator.validate(failsValidation))
@@ -70,7 +70,7 @@ public class PasswordsNotEmptyValidatorTest
 
 		assertThat(validator.validate(failsValidation))
 				.numberOfValidationErrorsIs(1)
-				.hasValidationErrorForField("passwordVerification");
+				.hasValidationErrorForField("confirmPassword");
 	}
 
 	@Test
@@ -78,12 +78,12 @@ public class PasswordsNotEmptyValidatorTest
 	{
 		Pojo failsValidation = Pojo.builder()
 				.password(PASSWORD)
-				.passwordVerification("")
+				.confirmPassword("")
 				.build();
 
 		assertThat(validator.validate(failsValidation))
 				.numberOfValidationErrorsIs(1)
-				.hasValidationErrorForField("passwordVerification");
+				.hasValidationErrorForField("confirmPassword");
 	}
 
 	@Test
@@ -94,7 +94,7 @@ public class PasswordsNotEmptyValidatorTest
 		assertThat(validator.validate(failsValidation))
 				.numberOfValidationErrorsIs(2)
 				.hasValidationErrorForField("password")
-				.hasValidationErrorForField("passwordVerification");
+				.hasValidationErrorForField("confirmPassword");
 	}
 
 	@Test
@@ -102,13 +102,13 @@ public class PasswordsNotEmptyValidatorTest
 	{
 		Pojo failsValidation = Pojo.builder()
 				.password("")
-				.passwordVerification("")
+				.confirmPassword("")
 				.build();
 
 		assertThat(validator.validate(failsValidation))
 				.numberOfValidationErrorsIs(2)
 				.hasValidationErrorForField("password")
-				.hasValidationErrorForField("passwordVerification");
+				.hasValidationErrorForField("confirmPassword");
 	}
 
 	@Test(expected = ValidationException.class)
@@ -132,27 +132,27 @@ public class PasswordsNotEmptyValidatorTest
 	@Builder
 	@PasswordsNotEmpty(
 			passwordFieldName = "password",
-			passwordVerificationFieldName = "passwordVerification"
+			passwordVerificationFieldName = "confirmPassword"
 	)
 	static class Pojo
 	{
 		private String password;
-		private String passwordVerification;
+		private String confirmPassword;
 	}
 
 	@PasswordsNotEmpty(
 			passwordFieldName = "password",
-			passwordVerificationFieldName = "passwordVerification"
+			passwordVerificationFieldName = "confirmPassword"
 	)
 	private class InvalidPasswordFieldPojo
 	{
 		private String invalid;
-		private String passwordVerification;
+		private String confirmPassword;
 	}
 
 	@PasswordsNotEmpty(
 			passwordFieldName = "password",
-			passwordVerificationFieldName = "passwordVerification"
+			passwordVerificationFieldName = "confirmPassword"
 	)
 	private class InvalidPasswordVerificationFieldPojo
 	{

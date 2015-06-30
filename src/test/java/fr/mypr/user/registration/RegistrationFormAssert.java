@@ -71,13 +71,13 @@ public class RegistrationFormAssert extends AbstractAssert<RegistrationFormAsser
 		return this;
 	}
 
-	public RegistrationFormAssert hasNoPasswordVerification()
+	public RegistrationFormAssert hasNoConfirmPassword()
 	{
 		isNotNull();
 
-		assertThat(actual.getPasswordVerification())
-				.overridingErrorMessage("Expected password verification to be <null> but was <%s>",
-				                        actual.getPasswordVerification()
+		assertThat(actual.getConfirmPassword())
+				.overridingErrorMessage("Expected confirm password to be <null> but was <%s>",
+				                        actual.getConfirmPassword()
 				)
 				.isNull();
 
@@ -98,16 +98,16 @@ public class RegistrationFormAssert extends AbstractAssert<RegistrationFormAsser
 		return this;
 	}
 
-	public RegistrationFormAssert hasPasswordVerification(String passwordVerification)
+	public RegistrationFormAssert hasConfirmPassword(String confirmPassword)
 	{
 		isNotNull();
 
-		assertThat(actual.getPasswordVerification())
-				.overridingErrorMessage("Expected password verification to be <%s> but was <%s>",
-				                        passwordVerification,
-				                        actual.getPasswordVerification()
+		assertThat(actual.getConfirmPassword())
+				.overridingErrorMessage("Expected confirm password to be <%s> but was <%s>",
+				                        confirmPassword,
+				                        actual.getConfirmPassword()
 				)
-				.isEqualTo(passwordVerification);
+				.isEqualTo(confirmPassword);
 
 		return this;
 	}
