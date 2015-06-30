@@ -64,7 +64,6 @@ public class RegistrationFormSubmitIT
 				)));
 	}
 
-
 	@Test
 	@DatabaseSetup("no-users.xml")
 	@ExpectedDatabase(value="no-users.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)

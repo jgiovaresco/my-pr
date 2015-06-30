@@ -29,13 +29,6 @@ public class RegistrationController
 		this.registrationService = registrationService;
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String redirectRequestToRegistrationPage()
-	{
-		log.debug("Redirect to registration page.");
-		return "redirect:/user/register";
-	}
-
 	/**
 	 * Renders the registration page.
 	 */
