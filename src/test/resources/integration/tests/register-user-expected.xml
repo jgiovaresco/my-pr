@@ -1,12 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
 	<user_account
-			id="1"
-			email="registered@user.com"
+			email="john.smith@gmail.com"
 			password="password"
-			first_name="RegisteredUser"
-			last_name="User"
+			first_name="John"
+			last_name="Smith"
 			role="ROLE_USER"
 			version="0"/>
-
 </dataset>

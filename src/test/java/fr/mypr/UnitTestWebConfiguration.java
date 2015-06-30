@@ -8,7 +8,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import static org.mockito.Mockito.mock;
 
-@Configuration
 @EnableWebMvc
 public class UnitTestWebConfiguration
 {

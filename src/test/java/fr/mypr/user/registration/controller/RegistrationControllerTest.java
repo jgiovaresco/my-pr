@@ -1,6 +1,6 @@
 package fr.mypr.user.registration.controller;
 
-import fr.mypr.*;
+import fr.mypr.UnitTestWebConfiguration;
 import fr.mypr.config.WebConfiguration;
 import fr.mypr.security.util.SecurityContextAssert;
 import fr.mypr.user.model.UserAccount;
@@ -25,6 +25,7 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {UnitTestWebConfiguration.class, WebConfiguration.class})
