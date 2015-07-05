@@ -29,9 +29,6 @@ public class RegistrationController
 		this.registrationService = registrationService;
 	}
 
-	/**
-	 * Renders the registration page.
-	 */
 	@RequestMapping(value = "/user/register", method = RequestMethod.GET)
 	public String showRegistrationForm(Model model)
 	{
@@ -45,10 +42,6 @@ public class RegistrationController
 		return VIEW_NAME_REGISTRATION_PAGE;
 	}
 
-
-	/**
-	 * Processes the form submissions of the registration form.
-	 */
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
 	public String registerUserAccount(@Valid @ModelAttribute("user") RegistrationForm userAccountData,
 	                                  BindingResult result) throws DuplicateEmailException
