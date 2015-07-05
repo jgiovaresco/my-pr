@@ -1,7 +1,7 @@
 package fr.mypr.user.registration.controller;
 
 import fr.mypr.UnitTestWebConfiguration;
-import fr.mypr.config.WebConfiguration;
+import fr.mypr.WebConfiguration;
 import fr.mypr.security.util.SecurityContextAssert;
 import fr.mypr.user.model.UserAccount;
 import fr.mypr.user.registration.*;

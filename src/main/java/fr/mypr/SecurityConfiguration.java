@@ -1,4 +1,4 @@
-package fr.mypr.config;
+package fr.mypr;
 
 import fr.mypr.security.service.*;
 import fr.mypr.user.repository.*;

@@ -1,4 +1,4 @@
-package fr.mypr.config;
+package fr.mypr;
 
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
