@@ -1,4 +1,4 @@
-package fr.mypr.security.controller;
+package fr.mypr.ihm.controller;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -27,9 +27,14 @@ public class LoginControllerTest
 	private MockMvc mockMvc;
 
 	@Configuration
-	@ComponentScan(basePackageClasses = LoginController.class)
 	public static class TestConfiguration
 	{
+		@Bean
+		public LoginController loginController()
+		{
+			return new LoginController();
+		}
+
 		@Bean
 		public ViewResolver viewResolver()
 		{

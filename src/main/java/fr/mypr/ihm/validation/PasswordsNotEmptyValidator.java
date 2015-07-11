@@ -1,4 +1,4 @@
-package fr.mypr.user.registration.validation;
+package fr.mypr.ihm.validation;
 
 import javax.validation.*;
 

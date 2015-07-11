@@ -1,4 +1,4 @@
-package fr.mypr.security.controller;
+package fr.mypr.ihm.controller;
 
 import org.slf4j.*;
 import org.springframework.stereotype.Controller;

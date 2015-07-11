@@ -4,7 +4,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.*;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import fr.mypr.MyPrApplication;
-import fr.mypr.user.registration.RegistrationForm;
+import fr.mypr.ihm.controller.RegistrationForm;
 import integration.IntegrationTestConstants;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.*;
@@ -26,7 +26,6 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles({"integrationTest"})

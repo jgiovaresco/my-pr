@@ -1,5 +1,6 @@
 package fr.mypr.user.registration;
 
+import fr.mypr.ihm.controller.RegistrationForm;
 import fr.mypr.user.model.UserAccount;
 import fr.mypr.user.repository.UserAccountRepository;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package fr.mypr.user.registration.controller;
+package fr.mypr.ihm.controller;
 
 import fr.mypr.UnitTestWebConfiguration;
 import fr.mypr.WebConfiguration;
@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static fr.mypr.user.registration.RegistrationFormAssert.assertThatRegistrationForm;
+import static fr.mypr.ihm.controller.RegistrationFormAssert.assertThatRegistrationForm;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;

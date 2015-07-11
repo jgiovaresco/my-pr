@@ -1,4 +1,4 @@
-package fr.mypr.controller;
+package fr.mypr.ihm.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

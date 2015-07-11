@@ -1,6 +1,7 @@
 package fr.mypr.user.registration;
 
 import com.googlecode.catchexception.CatchException;
+import fr.mypr.ihm.controller.RegistrationForm;
 import fr.mypr.user.model.*;
 import fr.mypr.user.repository.UserAccountRepository;
 import org.assertj.core.api.Assertions;

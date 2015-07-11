@@ -1,4 +1,4 @@
-package fr.mypr.user.registration;
+package fr.mypr.ihm.controller;
 
 import org.assertj.core.api.AbstractAssert;
 

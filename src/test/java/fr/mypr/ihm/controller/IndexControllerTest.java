@@ -1,4 +1,4 @@
-package fr.mypr.controller;
+package fr.mypr.ihm.controller;
 
 import fr.mypr.UnitTestWebConfiguration;
 import fr.mypr.WebConfiguration;

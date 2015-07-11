@@ -1,4 +1,4 @@
-package fr.mypr.user.registration.validation;
+package fr.mypr.ihm.validation;
 
 import lombok.*;
 import org.junit.*;
@@ -6,7 +6,7 @@ import org.junit.*;
 import javax.validation.*;
 import java.util.Set;
 
-import static fr.mypr.user.registration.validation.PasswordsNotEmptyValidatorTest.PasswordNotEmptyAssert.assertThat;
+import static fr.mypr.ihm.validation.PasswordsNotEmptyValidatorTest.PasswordNotEmptyAssert.assertThat;
 
 
 public class PasswordsNotEmptyValidatorTest

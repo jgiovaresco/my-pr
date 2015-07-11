@@ -7,7 +7,7 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = {
-		"fr.mypr.controller",
+		"fr.mypr.ihm.controller",
 		"fr.mypr.security.controller",
 		"fr.mypr.user.registration.controller"
 })

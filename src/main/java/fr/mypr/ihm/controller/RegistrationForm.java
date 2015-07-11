@@ -1,6 +1,6 @@
-package fr.mypr.user.registration;
+package fr.mypr.ihm.controller;
 
-import fr.mypr.user.registration.validation.*;
+import fr.mypr.ihm.validation.*;
 import lombok.*;
 import org.hibernate.validator.constraints.*;
 

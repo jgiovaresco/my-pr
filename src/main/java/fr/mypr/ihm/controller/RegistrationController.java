@@ -1,4 +1,4 @@
-package fr.mypr.user.registration.controller;
+package fr.mypr.ihm.controller;
 
 
 import fr.mypr.security.util.SecurityUtil;
