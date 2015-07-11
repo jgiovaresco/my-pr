@@ -1,7 +1,8 @@
 package fr.mypr;
 
-import fr.mypr.user.registration.RegistrationService;
-import org.springframework.context.annotation.*;
+import fr.mypr.identityaccess.application.IdentityApplicationService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -12,9 +13,15 @@ import static org.mockito.Mockito.mock;
 public class UnitTestWebConfiguration
 {
 	@Bean
-	public RegistrationService repositoryRegistrationService()
+	public IdentityApplicationService identityApplicationService()
 	{
-		return mock(RegistrationService.class);
+		return mock(IdentityApplicationService.class);
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder()
+	{
+		return mock(PasswordEncoder.class);
 	}
 
 	@Bean

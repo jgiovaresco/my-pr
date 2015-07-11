@@ -1,7 +1,7 @@
 package fr.mypr;
 
-import fr.mypr.security.service.*;
-import fr.mypr.user.repository.*;
+import fr.mypr.identityaccess.application.IdentityApplicationService;
+import fr.mypr.ihm.security.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +15,10 @@ import org.springframework.security.crypto.password.*;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
 	@Autowired
-	private UserAccountRepository userAccountRepository;
+	private IdentityApplicationService identityApplicationService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception
@@ -59,18 +62,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	{
 		auth
 				.userDetailsService(userDetailsService())
-				.passwordEncoder(passwordEncoder());
-	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder()
-	{
-		return NoOpPasswordEncoder.getInstance();
+				.passwordEncoder(passwordEncoder);
 	}
 
 	@Bean
 	public UserDetailsService userDetailsService()
 	{
-		return new RepositoryUserDetailsService(userAccountRepository);
+		return new RepositoryUserDetailsService(identityApplicationService);
 	}
 }

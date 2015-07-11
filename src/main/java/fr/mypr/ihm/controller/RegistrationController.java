@@ -1,11 +1,14 @@
 package fr.mypr.ihm.controller;
 
 
-import fr.mypr.security.util.SecurityUtil;
-import fr.mypr.user.model.UserAccount;
-import fr.mypr.user.registration.*;
+import fr.mypr.identityaccess.application.IdentityApplicationService;
+import fr.mypr.identityaccess.command.RegisterUserCommand;
+import fr.mypr.identityaccess.domain.model.User;
+import fr.mypr.ihm.security.util.SecurityUtil;
+import fr.mypr.identityaccess.application.DuplicateEmailException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.*;
@@ -21,12 +24,14 @@ public class RegistrationController
 	protected static final String ERROR_CODE_EMAIL_EXIST = "Email already exists";
 	protected static final String VIEW_NAME_REGISTRATION_PAGE = "user/registrationForm";
 
-	private RegistrationService registrationService;
+	private IdentityApplicationService registrationService;
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public RegistrationController(RegistrationService registrationService)
+	public RegistrationController(IdentityApplicationService registrationService, PasswordEncoder passwordEncoder)
 	{
 		this.registrationService = registrationService;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@RequestMapping(value = "/user/register", method = RequestMethod.GET)
@@ -55,7 +60,7 @@ public class RegistrationController
 
 		log.debug("No validation errors found. Continuing registration process.");
 
-		UserAccount registered;
+		User registered;
 		try
 		{
 			registered = createUserAccount(userAccountData, result);
@@ -74,14 +79,19 @@ public class RegistrationController
 		return "redirect:/";
 	}
 
-	private UserAccount createUserAccount(RegistrationForm userAccountData, BindingResult result)
+	private User createUserAccount(RegistrationForm userAccountData, BindingResult result)
 	{
 		log.debug("Creating user account with information: {}", userAccountData);
-		UserAccount registered;
+		User registered;
 
 		try
 		{
-			registered = registrationService.registerNewUserAccount(userAccountData);
+			registered = registrationService.registerUser(RegisterUserCommand.builder()
+					                                              .email(userAccountData.getEmail())
+					                                              .password(passwordEncoder.encode(userAccountData.getPassword()))
+					                                              .firstName(userAccountData.getFirstName())
+					                                              .lastName(userAccountData.getLastName())
+					                                              .build());
 		}
 		catch (DuplicateEmailException ex)
 		{

@@ -5,6 +5,5 @@
 			password="password"
 			first_name="John"
 			last_name="Smith"
-			role="ROLE_USER"
 			version="0"/>
 </dataset>

@@ -1,10 +1,10 @@
 package fr.mypr.ihm.controller;
 
-import fr.mypr.UnitTestWebConfiguration;
-import fr.mypr.WebConfiguration;
-import fr.mypr.security.util.SecurityContextAssert;
-import fr.mypr.user.model.UserAccount;
-import fr.mypr.user.registration.*;
+import fr.mypr.*;
+import fr.mypr.identityaccess.application.*;
+import fr.mypr.identityaccess.command.RegisterUserCommand;
+import fr.mypr.identityaccess.domain.model.*;
+import fr.mypr.ihm.security.util.SecurityContextAssert;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -12,6 +12,7 @@ import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -19,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static fr.mypr.ihm.controller.RegistrationFormAssert.assertThatRegistrationForm;
+import static fr.mypr.identityaccess.command.RegisterUserCommandAssert.assertThatRegisterUserCommand;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -39,24 +40,32 @@ public class RegistrationControllerTest
 	private static final String LAST_NAME = "Smith";
 	private static final String PASSWORD = "password";
 	private static final String PASSWORD_VERIFICATION = "confirmPassword";
+	private static final String ENCRYPTED_PASSWORD = "encryptedPassword";
 
 	private MockMvc mockMvc;
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 
-	@Autowired
-	private RegistrationService registrationServiceMock;
+	private IdentityApplicationService identityApplicationServiceMock;
+	private PasswordEncoder passwordEncoderMock;
 
 	@Before
 	public void setUp()
 	{
-		Mockito.reset(registrationServiceMock);
+		identityApplicationServiceMock = webApplicationContext.getBean(IdentityApplicationService.class);
+		passwordEncoderMock = webApplicationContext.getBean(PasswordEncoder.class);
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
 				.build();
 
 		SecurityContextHolder.getContext().setAuthentication(null);
+	}
+
+	@After
+	public void tearDown() throws Exception
+	{
+		Mockito.reset(identityApplicationServiceMock, passwordEncoderMock);
 	}
 
 	@Test
@@ -73,7 +82,7 @@ public class RegistrationControllerTest
 						hasProperty(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, isEmptyOrNullString())
 				)));
 
-		verifyZeroInteractions(registrationServiceMock);
+		verifyZeroInteractions(identityApplicationServiceMock);
 	}
 
 	@Test
@@ -102,7 +111,7 @@ public class RegistrationControllerTest
 				));
 
 		SecurityContextAssert.assertThat(SecurityContextHolder.getContext()).userIsAnonymous();
-		verifyZeroInteractions(registrationServiceMock);
+		verifyZeroInteractions(identityApplicationServiceMock);
 	}
 
 	@Test
@@ -137,7 +146,7 @@ public class RegistrationControllerTest
 				));
 
 		SecurityContextAssert.assertThat(SecurityContextHolder.getContext()).userIsAnonymous();
-		verifyZeroInteractions(registrationServiceMock);
+		verifyZeroInteractions(identityApplicationServiceMock);
 	}
 
 	@Test
@@ -167,48 +176,7 @@ public class RegistrationControllerTest
 				));
 
 		SecurityContextAssert.assertThat(SecurityContextHolder.getContext()).userIsAnonymous();
-		verifyZeroInteractions(registrationServiceMock);
-	}
-
-	@Test
-	public void registerUserAccount_should_render_registration_form_with_errors_when_email_exists() throws Exception
-	{
-		when(registrationServiceMock.registerNewUserAccount(Matchers.isA(RegistrationForm.class))).thenThrow(
-				new DuplicateEmailException(""));
-
-		mockMvc.perform(post("/user/register")
-				                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				                .param(RegistrationForm.FIELD_NAME_EMAIL, EMAIL)
-				                .param(RegistrationForm.FIELD_NAME_FIRST_NAME, FIRST_NAME)
-				                .param(RegistrationForm.FIELD_NAME_LAST_NAME, LAST_NAME)
-				                .param(RegistrationForm.FIELD_NAME_PASSWORD, PASSWORD)
-				                .param(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, PASSWORD)
-				                .sessionAttr(RegistrationForm.SESSION_ATTRIBUTE_USER_FORM, new RegistrationForm())
-		)
-				.andExpect(status().isOk())
-				.andExpect(view().name("user/registrationForm"))
-				.andExpect(model().attribute(RegistrationForm.MODEL_ATTRIBUTE_USER_FORM, allOf(
-						hasProperty(RegistrationForm.FIELD_NAME_EMAIL, is(EMAIL)),
-						hasProperty(RegistrationForm.FIELD_NAME_FIRST_NAME, is(FIRST_NAME)),
-						hasProperty(RegistrationForm.FIELD_NAME_LAST_NAME, is(LAST_NAME)),
-						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD, is(PASSWORD)),
-						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD, is(PASSWORD))
-				)))
-				.andExpect(model().attributeHasFieldErrors(RegistrationForm.MODEL_ATTRIBUTE_USER_FORM, RegistrationForm.FIELD_NAME_EMAIL));
-
-		SecurityContextAssert.assertThat(SecurityContextHolder.getContext()).userIsAnonymous();
-
-		ArgumentCaptor<RegistrationForm> registrationFormArgument = ArgumentCaptor.forClass(RegistrationForm.class);
-		verify(registrationServiceMock, times(1)).registerNewUserAccount(registrationFormArgument.capture());
-		verifyNoMoreInteractions(registrationServiceMock);
-
-		RegistrationForm formObject = registrationFormArgument.getValue();
-		assertThatRegistrationForm(formObject)
-				.hasEmail(EMAIL)
-				.hasFirstName(FIRST_NAME)
-				.hasLastName(LAST_NAME)
-				.hasPassword(PASSWORD)
-				.hasConfirmPassword(PASSWORD);
+		verifyZeroInteractions(identityApplicationServiceMock);
 	}
 
 	@Test
@@ -236,21 +204,62 @@ public class RegistrationControllerTest
 
 		SecurityContextAssert.assertThat(SecurityContextHolder.getContext()).userIsAnonymous();
 
-		verifyZeroInteractions(registrationServiceMock);
+		verifyZeroInteractions(identityApplicationServiceMock);
+	}
+
+	@Test
+	public void registerUserAccount_should_render_registration_form_with_errors_when_email_exists() throws Exception
+	{
+
+		when(passwordEncoderMock.encode(PASSWORD)).thenReturn(ENCRYPTED_PASSWORD);
+		when(identityApplicationServiceMock.registerUser(Matchers.isA(RegisterUserCommand.class))).thenThrow(
+				new DuplicateEmailException(""));
+
+		mockMvc.perform(post("/user/register")
+				                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				                .param(RegistrationForm.FIELD_NAME_EMAIL, EMAIL)
+				                .param(RegistrationForm.FIELD_NAME_FIRST_NAME, FIRST_NAME)
+				                .param(RegistrationForm.FIELD_NAME_LAST_NAME, LAST_NAME)
+				                .param(RegistrationForm.FIELD_NAME_PASSWORD, PASSWORD)
+				                .param(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, PASSWORD)
+				                .sessionAttr(RegistrationForm.SESSION_ATTRIBUTE_USER_FORM, new RegistrationForm())
+		)
+				.andExpect(status().isOk())
+				.andExpect(view().name("user/registrationForm"))
+				.andExpect(model().attribute(RegistrationForm.MODEL_ATTRIBUTE_USER_FORM, allOf(
+						hasProperty(RegistrationForm.FIELD_NAME_EMAIL, is(EMAIL)),
+						hasProperty(RegistrationForm.FIELD_NAME_FIRST_NAME, is(FIRST_NAME)),
+						hasProperty(RegistrationForm.FIELD_NAME_LAST_NAME, is(LAST_NAME)),
+						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD, is(PASSWORD)),
+						hasProperty(RegistrationForm.FIELD_NAME_PASSWORD, is(PASSWORD))
+				)))
+				.andExpect(model().attributeHasFieldErrors(RegistrationForm.MODEL_ATTRIBUTE_USER_FORM, RegistrationForm.FIELD_NAME_EMAIL));
+
+		SecurityContextAssert.assertThat(SecurityContextHolder.getContext()).userIsAnonymous();
+
+		ArgumentCaptor<RegisterUserCommand> arg = ArgumentCaptor.forClass(RegisterUserCommand.class);
+		verify(identityApplicationServiceMock, times(1)).registerUser(arg.capture());
+		verifyNoMoreInteractions(identityApplicationServiceMock);
+
+		RegisterUserCommand formObject = arg.getValue();
+		assertThatRegisterUserCommand(formObject)
+				.hasEmail(EMAIL)
+				.hasFirstName(FIRST_NAME)
+				.hasLastName(LAST_NAME)
+				.hasPassword(ENCRYPTED_PASSWORD);
 	}
 
 	@Test
 	public void registerUserAccount_should_create_new_account_and_render_index_page() throws Exception
 	{
-		UserAccount registered = UserAccount.builder()
-				.id(1L)
+		User registered = User.builder()
 				.email(EMAIL)
-				.firstName(FIRST_NAME)
-				.lastName(LAST_NAME)
 				.password(PASSWORD)
+				.person(Person.builder().name(new FullName(FIRST_NAME, LAST_NAME)).build())
 				.build();
 
-		when(registrationServiceMock.registerNewUserAccount(Matchers.isA(RegistrationForm.class))).thenReturn(registered);
+		when(passwordEncoderMock.encode(PASSWORD)).thenReturn(ENCRYPTED_PASSWORD);
+		when(identityApplicationServiceMock.registerUser(Matchers.isA(RegisterUserCommand.class))).thenReturn(registered);
 
 		mockMvc.perform(post("/user/register")
 				                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -266,19 +275,18 @@ public class RegistrationControllerTest
 
 		SecurityContextAssert.assertThat(SecurityContextHolder.getContext())
 				.loggedInUserIs(registered)
-				.loggedInUserHasPassword(registered.getPassword());
+				.loggedInUserHasPassword(registered.password());
 
-		ArgumentCaptor<RegistrationForm> registrationFormArgument = ArgumentCaptor.forClass(RegistrationForm.class);
-		verify(registrationServiceMock, times(1)).registerNewUserAccount(registrationFormArgument.capture());
-		verifyNoMoreInteractions(registrationServiceMock);
+		ArgumentCaptor<RegisterUserCommand> arg = ArgumentCaptor.forClass(RegisterUserCommand.class);
+		verify(identityApplicationServiceMock, times(1)).registerUser(arg.capture());
+		verifyNoMoreInteractions(identityApplicationServiceMock);
 
-		RegistrationForm formObject = registrationFormArgument.getValue();
-		assertThatRegistrationForm(formObject)
+		RegisterUserCommand formObject = arg.getValue();
+		assertThatRegisterUserCommand(formObject)
 				.hasEmail(EMAIL)
 				.hasFirstName(FIRST_NAME)
 				.hasLastName(LAST_NAME)
-				.hasPassword(PASSWORD)
-				.hasConfirmPassword(PASSWORD);
+				.hasPassword(ENCRYPTED_PASSWORD);
 	}
 
 }
