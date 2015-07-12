@@ -52,8 +52,9 @@ dependencies {
     testCompile('eu.codearte.catch-exception:catch-exception:1.4.4')
     testCompile('org.assertj:assertj-core:3.0.0')
 
-    testCompile('com.github.springtestdbunit:spring-test-dbunit:1.2.1')
-    testCompile('org.dbunit:dbunit:2.5.1')
+    testCompile 'com.github.springtestdbunit:spring-test-dbunit:1.2.1'
+    testCompile 'org.dbunit:dbunit:2.5.1'
+    testCompile 'com.ninja-squad:DbSetup:1.6.0'
 }
 
 eclipse {

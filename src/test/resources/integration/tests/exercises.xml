@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	<exercises
+			id="1"
+			name="Deadlift"
+			unit="kg"
+			/>
+	<exercises
+			id="2"
+			name="Snatch"
+			unit="kg"
+			/>
+	<exercises
+			id="3"
+			name="Pull ups"
+			unit="reps"
+			/>
+</dataset>
