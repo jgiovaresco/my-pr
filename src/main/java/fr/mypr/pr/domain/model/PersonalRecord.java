@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
 @Builder
 @Accessors(fluent = true)
 public class PersonalRecord

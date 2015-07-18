@@ -6,8 +6,6 @@ import javax.persistence.*;
 
 @Builder
 @Getter
-@ToString
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "exercises")

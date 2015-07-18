@@ -43,10 +43,15 @@ public class SpringJpaExerciseRepository implements ExerciseRepository
 
 	private Exercise toExercise(ExerciseJpa exerciseJpa)
 	{
-		return Exercise.builder()
-				.id(exerciseJpa.getId())
-				.name(exerciseJpa.getName())
-				.unit(exerciseJpa.getUnit())
-				.build();
+		Exercise exercise = null;
+		if (null != exerciseJpa)
+		{
+			exercise = Exercise.builder()
+					.id(exerciseJpa.getId())
+					.name(exerciseJpa.getName())
+					.unit(exerciseJpa.getUnit())
+					.build();
+		}
+		return exercise;
 	}
 }

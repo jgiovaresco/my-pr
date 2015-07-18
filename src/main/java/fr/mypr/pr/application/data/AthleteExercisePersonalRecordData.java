@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
 @Builder
 public class AthleteExercisePersonalRecordData
 {

@@ -1,6 +1,6 @@
 package fr.mypr.pr.port.adapter.persistence.repository;
 
-import fr.mypr.pr.domain.model.Exercise;
+import fr.mypr.pr.domain.model.*;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.*;
@@ -57,4 +57,31 @@ public class SpringJpaExerciseRepositoryTest
 				.hasUnit(EXERCISE_UNIT)
 		;
 	}
+
+	@Test
+	public void exerciseOfId_should_return_null_when_not_exist()
+	{
+		when(exerciseRepositoryMock.findOne(EXERCISE_ID)).thenReturn(null);
+
+		Exercise exercise = repository.exerciseOfId(EXERCISE_ID);
+
+		assertThat(exercise).isNull();
+	}
+
+	@Test
+	public void exerciseOfId_should_return_exercise_when_exist()
+	{
+		when(exerciseRepositoryMock.findOne(EXERCISE_ID)).thenReturn(
+				ExerciseJpa.builder().id(EXERCISE_ID).name(EXERCISE_NAME).unit(EXERCISE_UNIT).build()
+		);
+
+		Exercise exercise = repository.exerciseOfId(EXERCISE_ID);
+
+		ExerciseAssert.assertThat(exercise)
+				.hasId(EXERCISE_ID)
+				.hasName(EXERCISE_NAME)
+				.hasUnit(EXERCISE_UNIT)
+		;
+	}
+
 }

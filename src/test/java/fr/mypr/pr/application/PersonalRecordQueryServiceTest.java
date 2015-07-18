@@ -57,11 +57,11 @@ public class PersonalRecordQueryServiceTest
 
 		assertThat(result)
 				.isNotNull()
-				.extracting("athleteIdentity", "exerciseId", "id", "prDate", "prValue")
+				.extracting("athleteIdentity", "athleteName", "exerciseId", "exerciseName", "exerciseUnit", "id", "prDate", "prValue")
 				.containsOnly(
-						tuple(ATHLETE_ID, "ex1", "1", LocalDate.of(2014, 12, 12), 130.0f),
-						tuple(ATHLETE_ID, "ex2", "3", LocalDate.of(2015, 6, 12), 57.0f),
-						tuple(ATHLETE_ID, "ex3", "4", LocalDate.of(2015, 6, 25), 105.0f)
+						tuple(ATHLETE_ID, "John Doe", "ex1", "Deadlift", "kg", "1", LocalDate.of(2014, 12, 12), 130.0f),
+						tuple(ATHLETE_ID, "John Doe", "ex2", "Snatch", "kg", "3", LocalDate.of(2015, 6, 12), 57.0f),
+						tuple(ATHLETE_ID, "John Doe", "ex3", "Back Squat", "kg", "4", LocalDate.of(2015, 6, 25), 105.0f)
 				);
 	}
 
