@@ -1,18 +1,16 @@
 package fr.mypr.identityaccess.domain.persistence;
 
-import fr.mypr.common.persistence.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Builder
 @Getter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "user_account")
-public class UserAccount extends BaseEntity<Long>
+public class UserAccount
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,10 +27,4 @@ public class UserAccount extends BaseEntity<Long>
 
 	@Column(name = "password", length = 255)
 	private String password;
-
-	@Override
-	public Long getId()
-	{
-		return id;
-	}
 }

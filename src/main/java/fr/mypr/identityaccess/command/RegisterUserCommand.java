@@ -2,7 +2,8 @@ package fr.mypr.identityaccess.command;
 
 import lombok.*;
 
-@Data
+@Getter
+@AllArgsConstructor
 @Builder
 public class RegisterUserCommand
 {

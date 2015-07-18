@@ -3,8 +3,7 @@ package fr.mypr.identityaccess.domain.model;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-@Data
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
 @Accessors(fluent = true)
 public class FullName

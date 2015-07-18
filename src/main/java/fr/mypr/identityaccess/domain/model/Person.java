@@ -5,9 +5,8 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
 @Builder
-@Setter(AccessLevel.PROTECTED)
 @Accessors(fluent = true)
 public class Person
 {

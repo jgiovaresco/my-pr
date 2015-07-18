@@ -3,11 +3,10 @@ package fr.mypr.identityaccess.domain.model;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-@Data
+@Getter
 @Builder
-@Setter(AccessLevel.PROTECTED)
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Accessors(fluent = true)
 public class UserDescriptor
 {

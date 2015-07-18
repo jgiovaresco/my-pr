@@ -3,9 +3,9 @@ package fr.mypr.identityaccess.domain.model;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Builder
-@Setter(AccessLevel.PROTECTED)
 @Accessors(fluent = true)
 public class User
 {

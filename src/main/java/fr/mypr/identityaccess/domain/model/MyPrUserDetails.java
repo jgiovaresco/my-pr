@@ -1,7 +1,7 @@
 package fr.mypr.identityaccess.domain.model;
 
 import fr.mypr.ihm.security.service.Role;
-import lombok.*;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.User;
 import java.util.*;
 
 @Getter
-@ToString
 public class MyPrUserDetails extends User
 {
 	private String firstName;
