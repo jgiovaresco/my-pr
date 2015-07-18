@@ -2,19 +2,19 @@ package fr.mypr.ihm.security.util;
 
 import fr.mypr.identityaccess.domain.model.*;
 import fr.mypr.ihm.security.service.Role;
-import org.slf4j.*;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+@Slf4j
+@UtilityClass
 public class SecurityUtil
 {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtil.class);
-
 	public static void logInUser(User user)
 	{
-		LOGGER.info("Logging in user: {}", user);
+		log.info("Logging in user: {}", user);
 
 		MyPrUserDetails userDetails = MyPrUserDetails.builder()
 				.firstName(user.person().name().firstName())
@@ -24,11 +24,11 @@ public class SecurityUtil
 				.role(Role.ROLE_USER)
 				.build();
 
-		LOGGER.debug("Logging in principal: {}", userDetails);
+		log.debug("Logging in principal: {}", userDetails);
 
 		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		LOGGER.info("User: {} has been logged in.", userDetails);
+		log.info("User: {} has been logged in.", userDetails);
 	}
 }
