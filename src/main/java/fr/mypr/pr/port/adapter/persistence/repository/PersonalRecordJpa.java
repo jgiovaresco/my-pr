@@ -24,8 +24,8 @@ public class PersonalRecordJpa
 	private String exerciseName;
 	@Column
 	private String exerciseUnit;
-	@Column
+	@Column(name = "pr_date")
 	private LocalDate date;
-	@Column
+	@Column(name = "pr_value")
 	private Float value;
 }
