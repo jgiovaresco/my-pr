@@ -1,7 +1,6 @@
-package fr.mypr;
+package fr.mypr.ihm;
 
 import org.springframework.context.annotation.*;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import java.util.Properties;
 
@@ -12,22 +11,18 @@ import java.util.Properties;
 public class WebConfiguration
 {
 	@Bean
-	public SimpleMappingExceptionResolver exceptionResolver()
+	public MyPrExceptionResolver exceptionResolver()
 	{
-		SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+		MyPrExceptionResolver exceptionResolver = new MyPrExceptionResolver();
 
 		Properties exceptionMappings = new Properties();
-
-		exceptionMappings.put("java.lang.Exception", "error/error");
-		exceptionMappings.put("java.lang.RuntimeException", "error/error");
-
+		exceptionMappings.put("java.lang.Exception", MyPrExceptionResolver.DEFAULT_ERROR_VIEW);
+		exceptionMappings.put("java.lang.RuntimeException", MyPrExceptionResolver.DEFAULT_ERROR_VIEW);
 		exceptionResolver.setExceptionMappings(exceptionMappings);
 
 		Properties statusCodes = new Properties();
-
 		statusCodes.put("error/404", "404");
-		statusCodes.put("error/error", "500");
-
+		statusCodes.put(MyPrExceptionResolver.DEFAULT_ERROR_VIEW, "500");
 		exceptionResolver.setStatusCodes(statusCodes);
 
 		return exceptionResolver;

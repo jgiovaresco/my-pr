@@ -1,14 +1,14 @@
-package fr.mypr;
+package fr.mypr.ihm;
 
 import fr.mypr.identityaccess.application.IdentityApplicationService;
-import fr.mypr.ihm.security.service.*;
+import fr.mypr.ihm.security.service.RepositoryUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity

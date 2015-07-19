@@ -1,7 +1,7 @@
 package fr.mypr.ihm.controller;
 
 import fr.mypr.UnitTestWebConfiguration;
-import fr.mypr.WebConfiguration;
+import fr.mypr.ihm.WebConfiguration;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

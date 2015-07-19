@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">>
+<head>
+	<title>My PR</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+	<header>
+		Header
+	</header>
+
+	<div layout:fragment="content">
+		<h1>Default Spring Boot Error Page</h1>
+
+		<p th:if="${url}">
+			<b>Page: </b> <span th:text="${url}">Page URL</span>
+		</p>
+
+		<p th:if="${timestamp}" id='created'>
+			<b>Occurred:</b> <span th:text="${#dates.format(timestamp,'yyyy-MM-dd HH:mm:ss.SSS')}">Timestamp</span>
+		</p>
+
+		<p>Application has encountered an error. Please contact support on...</p>
+	</div>
+</body>
+</html>
