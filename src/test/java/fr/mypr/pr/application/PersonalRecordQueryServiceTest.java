@@ -7,9 +7,7 @@ import fr.mypr.pr.application.data.AthleteExercisePersonalRecordData;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.embedded.*;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.*;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.sql.DataSource;
@@ -20,7 +18,8 @@ import static com.ninja_squad.dbsetup.Operations.*;
 import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = PersonalRecordQueryServiceTest.PersonalRecordQueryServiceConfiguration.class)
+@ContextConfiguration(classes = QueryServiceTestConfiguration.class)
+@ActiveProfiles("unitTest")
 public class PersonalRecordQueryServiceTest
 {
 	private static final String ATHLETE_ID = "athlete_1";
@@ -63,23 +62,5 @@ public class PersonalRecordQueryServiceTest
 						tuple(ATHLETE_ID, "John Doe", "ex2", "Snatch", "kg", "3", LocalDate.of(2015, 6, 12), 57.0f),
 						tuple(ATHLETE_ID, "John Doe", "ex3", "Back Squat", "kg", "4", LocalDate.of(2015, 6, 25), 105.0f)
 				);
-	}
-
-	public static class PersonalRecordQueryServiceConfiguration
-	{
-		@Bean
-		public PersonalRecordQueryService personalRecordQueryService(DataSource dataSource)
-		{
-			return new PersonalRecordQueryService(dataSource);
-		}
-
-		@Bean
-		public DataSource getDataSource() throws Exception
-		{
-			return new EmbeddedDatabaseBuilder()
-					.setType(EmbeddedDatabaseType.H2)
-					.addScript("schema-pr.sql")
-					.build();
-		}
 	}
 }

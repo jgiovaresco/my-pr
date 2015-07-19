@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	<personal_records
+			id="1"
+			athlete_id="registered@user.com"
+			athlete_name="RegisteredUser User"
+			exercise_id="1"
+			exercise_name="Deadlift"
+			exercise_unit="kg"
+			pr_date="2015-06-24"
+			pr_value="140.0"
+			/>
+</dataset>

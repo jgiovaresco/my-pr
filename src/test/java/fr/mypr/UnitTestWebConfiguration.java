@@ -1,7 +1,7 @@
 package fr.mypr;
 
 import fr.mypr.identityaccess.application.IdentityApplicationService;
-import fr.mypr.pr.application.PersonalRecordQueryService;
+import fr.mypr.pr.application.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.ViewResolver;
@@ -20,9 +20,21 @@ public class UnitTestWebConfiguration
 	}
 
 	@Bean
+	public PersonalRecordApplicationService personalRecordApplicationService()
+	{
+		return mock(PersonalRecordApplicationService.class);
+	}
+
+	@Bean
 	public PersonalRecordQueryService personalRecordQueryService()
 	{
 		return mock(PersonalRecordQueryService.class);
+	}
+
+	@Bean
+	public ExerciseQueryService exerciseQueryService()
+	{
+		return mock(ExerciseQueryService.class);
 	}
 
 	@Bean

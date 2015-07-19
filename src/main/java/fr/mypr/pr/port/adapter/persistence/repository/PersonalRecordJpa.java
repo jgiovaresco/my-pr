@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Builder
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "personal_records")
