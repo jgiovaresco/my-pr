@@ -32,8 +32,8 @@ public class PersonalRecordQueryService
 							.exerciseId(rs.getString("EXERCISE_ID"))
 							.exerciseName(rs.getString("EXERCISE_NAME"))
 							.exerciseUnit(rs.getString("EXERCISE_UNIT"))
-							.prDate(rs.getDate("PR_DATE").toLocalDate())
-							.prValue(rs.getFloat("PR_VALUE"))
+							.date(rs.getDate("PR_DATE").toLocalDate())
+							.value(rs.getFloat("PR_VALUE"))
 							.build();
 				});
 	}

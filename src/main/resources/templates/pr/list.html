@@ -14,25 +14,15 @@
 
 			<table class="table table-hover text-center">
 				<tbody>
-				<tr>
-					<td>Deadlift</td>
-					<td>140 kg</td>
-					<td><a th:href="@{/pr/exercise/new(id=1)}">>new PR</a></td>
-				</tr>
-				<tr>
-					<td>Snatch</td>
-					<td>57 kg</td>
-					<td><a th:href="@{/pr/exercise/new(id=2)}">>new PR</a></td>
-				</tr>
-				<tr>
-					<td>Pull ups</td>
-					<td>22 reps</td>
-					<td><a th:href="@{/pr/exercise/new(id=3)}">>new PR</a></td>
+				<tr th:each="pr : ${personalRecords}">
+					<td th:text="${pr.exerciseName}"></td>
+					<td th:text="${pr.value + ' ' + pr.exerciseUnit}"></td>
+					<td><a th:href="@{/pr/new(id=${pr.id})}">>new PR</a></td>
 				</tr>
 				</tbody>
 			</table>
 
-			<a th:href="@{/pr/exercise/new}">Add an exercise</a>
+			<a th:href="@{/pr/new}">Add an exercise</a>
 		</div>
 		<div>
 			<h2>Benchmarks wods</h2>

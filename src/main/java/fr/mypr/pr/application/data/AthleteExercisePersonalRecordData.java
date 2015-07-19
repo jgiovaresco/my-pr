@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Getter
+@EqualsAndHashCode
 @Builder
 public class AthleteExercisePersonalRecordData
 {
@@ -17,6 +18,6 @@ public class AthleteExercisePersonalRecordData
 	private String exerciseUnit;
 	// PR
 	private String id;
-	private LocalDate prDate;
-	private Float prValue;
+	private LocalDate date;
+	private Float value;
 }
