@@ -76,4 +76,41 @@ public class SpringJpaPersonalRecordRepositoryTest
 				.hasAthleteId(ATHLETE_ID)
 				.hasAthleteName(ATHLETE_NAME);
 	}
+
+	@Test
+	public void personalRecordOfId_should_return_null_when_not_exist()
+	{
+		when(personalRecordRepository.findOne(PR_ID)).thenReturn(null);
+
+		PersonalRecord pr = repository.personalRecordOfId(PR_ID);
+
+		assertThat(pr).isNull();
+	}
+
+	@Test
+	public void personalRecordOfId_should_return_PersonalRecord_when_exist()
+	{
+		when(personalRecordRepository.findOne(PR_ID)).thenReturn(
+				PersonalRecordJpa.builder()
+						.id(PR_ID)
+						.value(PR_VALUE)
+						.date(PR_DATE)
+						.athleteId(ATHLETE_ID)
+						.athleteName(ATHLETE_NAME)
+						.exerciseId(EXERCISE_ID)
+						.exerciseName(EXERCISE_NAME)
+						.exerciseUnit(EXERCISE_UNIT)
+						.build()
+		);
+
+		PersonalRecord pr = repository.personalRecordOfId(PR_ID);
+
+		PersonalRecordAssert.assertThat(pr)
+				.hasId(PR_ID)
+				.hasDate(PR_DATE)
+				.hasValue(PR_VALUE)
+				.hasAthlete(Athlete.builder().identity(ATHLETE_ID).name(ATHLETE_NAME).build())
+				.hasExercise(Exercise.builder().id(EXERCISE_ID).name(EXERCISE_NAME).unit(EXERCISE_UNIT).build())
+		;
+	}
 }

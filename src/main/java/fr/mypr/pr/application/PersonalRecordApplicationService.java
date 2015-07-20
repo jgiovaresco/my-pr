@@ -23,4 +23,11 @@ public class PersonalRecordApplicationService
 		PersonalRecord pr = athlete.newPersonalRecord(personalRecordRepository.nextIdentity(), aDate, aValue, exercise);
 		personalRecordRepository.save(pr);
 	}
+
+	public void newPersonalRecordForExercise(String aPersonalRecordId, LocalDate aDate, Float aValue)
+	{
+		PersonalRecord pr = personalRecordRepository.personalRecordOfId(aPersonalRecordId);
+		pr.newRecord(aDate, aValue);
+		personalRecordRepository.save(pr);
+	}
 }

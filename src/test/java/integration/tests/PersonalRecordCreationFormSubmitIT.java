@@ -4,7 +4,8 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.*;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import fr.mypr.MyPrApplication;
-import fr.mypr.ihm.controller.data.PersonalRecordForm;
+import fr.mypr.ihm.controller.pr.data.PersonalRecordCreateForm;
+import fr.mypr.pr.application.data.ExerciseData;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,6 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles({"integrationTest"})
@@ -69,8 +69,8 @@ public class PersonalRecordCreationFormSubmitIT
 	}
 
 	@Test
-	@DatabaseSetup({"no-exercises.xml", "no-pr.xml"})
-	@ExpectedDatabase(value = "no-exercises.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+	@DatabaseSetup({"exercises.xml", "no-pr.xml"})
+	@ExpectedDatabase(value = "no-pr.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
 	public void showPersonalRecordCreationForm_should_render_personal_creation_creation_page_with_empty_form() throws Exception
 	{
 		mockMvc.perform(get("/pr/new")
@@ -78,52 +78,58 @@ public class PersonalRecordCreationFormSubmitIT
 //				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(view().name("pr/creationForm"))
-				.andExpect(model().attribute(PersonalRecordForm.EXERCISES_ATTRIBUTE_FORM, allOf(
-						hasProperty(PersonalRecordForm.FIELD_DATE, isEmptyOrNullString()),
-						hasProperty(PersonalRecordForm.FIELD_VALUE, isEmptyOrNullString()),
-						hasProperty(PersonalRecordForm.FIELD_EXERCISE, isEmptyOrNullString())
-				)));
+				.andExpect(model().attribute(PersonalRecordCreateForm.PR_ATTRIBUTE_FORM, allOf(
+						hasProperty(PersonalRecordCreateForm.FIELD_DATE, isEmptyOrNullString()),
+						hasProperty(PersonalRecordCreateForm.FIELD_VALUE, isEmptyOrNullString()),
+						hasProperty(PersonalRecordCreateForm.FIELD_EXERCISE, isEmptyOrNullString())
+				)))
+				.andExpect(model().attribute(PersonalRecordCreateForm.EXERCISES_ATTRIBUTE_FORM, contains(
+						ExerciseData.builder().id("1").name("Deadlift").unit("kg").build(),
+						ExerciseData.builder().id("2").name("Snatch").unit("kg").build(),
+						ExerciseData.builder().id("3").name("Pull ups").unit("reps").build()
+				)))
+		;
 	}
 
 	@Test
 	@DatabaseSetup({"no-exercises.xml", "no-pr.xml"})
-	@ExpectedDatabase(value = "no-exercises.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+	@ExpectedDatabase(value = "no-pr.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
 	public void addNewPersonalRecord_should_render_creation_page_with_errors_when_create_with_empty_form() throws Exception
 	{
 		mockMvc.perform(post("/pr/new")
 				                .with(user(REGISTERED_USER.getUserDetails()))
 				                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				                .sessionAttr(PersonalRecordForm.EXERCISES_ATTRIBUTE_FORM, new PersonalRecordForm())
+				                .sessionAttr(PersonalRecordCreateForm.PR_ATTRIBUTE_FORM, PersonalRecordCreateForm.builder().build())
 		)
 				.andExpect(status().isOk())
 				.andExpect(view().name("pr/creationForm"))
-				.andExpect(model().attribute(PersonalRecordForm.PR_ATTRIBUTE_FORM, allOf(
-						hasProperty(PersonalRecordForm.FIELD_DATE, isEmptyOrNullString()),
-						hasProperty(PersonalRecordForm.FIELD_VALUE, isEmptyOrNullString()),
-						hasProperty(PersonalRecordForm.FIELD_EXERCISE, isEmptyOrNullString())
+				.andExpect(model().attribute(PersonalRecordCreateForm.PR_ATTRIBUTE_FORM, allOf(
+						hasProperty(PersonalRecordCreateForm.FIELD_DATE, isEmptyOrNullString()),
+						hasProperty(PersonalRecordCreateForm.FIELD_VALUE, isEmptyOrNullString()),
+						hasProperty(PersonalRecordCreateForm.FIELD_EXERCISE, isEmptyOrNullString())
 				)))
 				.andExpect(model().attributeHasFieldErrors(
-						PersonalRecordForm.PR_ATTRIBUTE_FORM,
-						PersonalRecordForm.FIELD_DATE,
-						PersonalRecordForm.FIELD_VALUE,
-						PersonalRecordForm.FIELD_EXERCISE
+						PersonalRecordCreateForm.PR_ATTRIBUTE_FORM,
+						PersonalRecordCreateForm.FIELD_DATE,
+						PersonalRecordCreateForm.FIELD_VALUE,
+						PersonalRecordCreateForm.FIELD_EXERCISE
 				));
 	}
 
 	@Test
 	@DatabaseSetup({"exercises.xml", "no-pr.xml", "users.xml"})
-	@ExpectedDatabase(value = "creation-pr-expected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+	@ExpectedDatabase(value = "create-pr-expected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
 	public void addNewPersonalRecord_should_create_new_pr_and_render_list_page() throws Exception
 	{
 		mockMvc.perform(post("/pr/new")
 				                .with(user(REGISTERED_USER.getUserDetails()))
 				                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				                .param(PersonalRecordForm.FIELD_DATE, PR_DATE)
-				                .param(PersonalRecordForm.FIELD_VALUE, PR_VALUE)
-				                .param(PersonalRecordForm.FIELD_EXERCISE, EXERCISE_ID)
-				                .sessionAttr(PersonalRecordForm.EXERCISES_ATTRIBUTE_FORM, new PersonalRecordForm())
+				                .param(PersonalRecordCreateForm.FIELD_DATE, PR_DATE)
+				                .param(PersonalRecordCreateForm.FIELD_VALUE, PR_VALUE)
+				                .param(PersonalRecordCreateForm.FIELD_EXERCISE, EXERCISE_ID)
+				                .sessionAttr(PersonalRecordCreateForm.PR_ATTRIBUTE_FORM, PersonalRecordCreateForm.builder().build())
 		)
-				.andDo(print())
+//				.andDo(print())
 				.andExpect(status().isFound())
 				.andExpect(redirectedUrl("/pr"));
 	}

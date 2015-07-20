@@ -26,7 +26,20 @@ public class SpringJpaPersonalRecordRepository implements PersonalRecordReposito
 	@Override
 	public void save(PersonalRecord aPersonalRecord)
 	{
-		PersonalRecordJpa exerciseJpa = PersonalRecordJpa.builder()
+		PersonalRecordJpa exerciseJpa = toPersonalRecordJpa(aPersonalRecord);
+
+		jpaPersonalRecordRepository.save(exerciseJpa);
+	}
+
+	@Override
+	public PersonalRecord personalRecordOfId(String aPersonalRecordId)
+	{
+		return toPersonalRecord(jpaPersonalRecordRepository.findOne(aPersonalRecordId));
+	}
+
+	private PersonalRecordJpa toPersonalRecordJpa(PersonalRecord aPersonalRecord)
+	{
+		return PersonalRecordJpa.builder()
 				.id(aPersonalRecord.id())
 				.athleteId(aPersonalRecord.athlete().identity())
 				.athleteName(aPersonalRecord.athlete().name())
@@ -36,8 +49,28 @@ public class SpringJpaPersonalRecordRepository implements PersonalRecordReposito
 				.date(aPersonalRecord.date())
 				.value(aPersonalRecord.value())
 				.build();
-
-		jpaPersonalRecordRepository.save(exerciseJpa);
 	}
 
+	private PersonalRecord toPersonalRecord(PersonalRecordJpa aPersonalRecordJpa)
+	{
+		PersonalRecord pr = null;
+		if (null != aPersonalRecordJpa)
+		{
+			pr = PersonalRecord.builder()
+					.id(aPersonalRecordJpa.getId())
+					.athlete(Athlete.builder()
+							         .identity(aPersonalRecordJpa.getAthleteId())
+							         .name(aPersonalRecordJpa.getAthleteName())
+							         .build())
+					.exercise(Exercise.builder()
+							          .id(aPersonalRecordJpa.getExerciseId())
+							          .name(aPersonalRecordJpa.getExerciseName())
+							          .unit(aPersonalRecordJpa.getExerciseUnit())
+							          .build())
+					.date(aPersonalRecordJpa.getDate())
+					.value(aPersonalRecordJpa.getValue())
+					.build();
+		}
+		return pr;
+	}
 }

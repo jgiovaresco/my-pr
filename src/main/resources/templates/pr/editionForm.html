@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+	<title>My PR</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+	<div layout:fragment="content">
+		<h2>New Record for <span th:text="${personalRecord.exerciseName}">Exercise</span></h2>
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form action="#" th:action="@{/pr/edit}" th:object="${personalRecord}" method="post" role="form" class="form-horizontal">
+					<input type="hidden" class="form-control" th:field="*{id}"/>
+
+					<div class="form-group"
+					     th:classappend="${#fields.hasErrors('date')}?'has-error has-feedback'">
+
+						<label class="col-xs-3 control-label" for="pr-date">Date</label>
+
+						<div class="col-xs-9">
+							<input type="text" class="form-control" id="pr-date" th:field="*{date}" placeholder="Date"/>
+
+							<div th:if="${#fields.hasErrors('date')}">
+								<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+								<span class="help-block" th:errors="*{date}">Date Error</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group"
+					     th:classappend="${#fields.hasErrors('value')}?'has-error has-feedback'">
+
+						<label class="col-xs-3 control-label" for="pr-value">Value</label>
+
+						<div class="col-xs-9">
+							<input type="text" class="form-control" id="pr-value" th:field="*{value}" placeholder="Value"/>
+
+							<div th:if="${#fields.hasErrors('value')}">
+								<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+								<span class="help-block" th:errors="*{value}">Value Error</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-offset-3 col-xs-9">
+
+							<input id="submit-btn" type="submit" class="btn btn-primary" value="Submit"/>
+							<input id="reset-btn" type="reset" class="btn btn-default" value="Reset"/>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			$('input#reset-btn').on('click', function () {
+				$('.form-group').removeClass('has-error has-feedback');
+				$('.form-control-feedback').hide();
+				$('.help-block').hide();
+				return true;
+			});
+			/*]]>*/
+		</script>
+	</div>
+</body>
+</html>

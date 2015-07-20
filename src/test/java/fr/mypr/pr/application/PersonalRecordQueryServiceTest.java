@@ -1,9 +1,9 @@
 package fr.mypr.pr.application;
 
-import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.*;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
-import fr.mypr.pr.application.data.AthleteExercisePersonalRecordData;
+import fr.mypr.pr.application.data.*;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,9 @@ import static org.assertj.core.api.Assertions.*;
 public class PersonalRecordQueryServiceTest
 {
 	private static final String ATHLETE_ID = "athlete_1";
+	private static final String PR_ID = "1";
+
+	private static DbSetupTracker dbSetupTracker = new DbSetupTracker();
 
 	@Autowired
 	private DataSource dataSource;
@@ -46,13 +49,14 @@ public class PersonalRecordQueryServiceTest
 				);
 
 		DbSetup dbSetup = new DbSetup(new DataSourceDestination(dataSource), operation);
-		dbSetup.launch();
+		dbSetupTracker.launchIfNecessary(dbSetup);
+		dbSetupTracker.skipNextLaunch();
 	}
 
 	@Test
 	public void personalRecordForAthlete_should_return_athlete_s_personal_records()
 	{
-		Collection<AthleteExercisePersonalRecordData> result = service.personalRecordForAthlete(ATHLETE_ID);
+		Collection<AthleteExercisePersonalRecordData> result = service.allPersonalRecordsOfAthlete(ATHLETE_ID);
 
 		assertThat(result)
 				.isNotNull()
@@ -62,5 +66,22 @@ public class PersonalRecordQueryServiceTest
 						tuple(ATHLETE_ID, "John Doe", "ex2", "Snatch", "kg", "3", LocalDate.of(2015, 6, 12), 57.0f),
 						tuple(ATHLETE_ID, "John Doe", "ex3", "Back Squat", "kg", "4", LocalDate.of(2015, 6, 25), 105.0f)
 				);
+	}
+
+	@Test
+	public void personalRecordDataOfId_should_return_personal_record()
+	{
+		AthleteExercisePersonalRecordData result = service.personalRecordDataOfId(ATHLETE_ID, PR_ID);
+
+		AthleteExercisePersonalRecordDataAssert.assertThat(result)
+				.isNotNull()
+				.hasId(PR_ID)
+				.hasDate(LocalDate.of(2014, 12, 12))
+				.hasValue(130.0f)
+				.hasExerciseId("ex1")
+				.hasExerciseName("Deadlift")
+				.hasExerciseUnit("kg")
+				.hasAthleteId(ATHLETE_ID)
+				.hasAthleteName("John Doe");
 	}
 }

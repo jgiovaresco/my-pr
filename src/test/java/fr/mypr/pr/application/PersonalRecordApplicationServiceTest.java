@@ -57,4 +57,29 @@ public class PersonalRecordApplicationServiceTest
 				.hasAthlete(athlete)
 				.hasExercise(exercise);
 	}
+
+
+	@Test
+	public void newPersonalRecordForExercise_should_update_a_pr()
+	{
+		Athlete athlete = Athlete.builder().identity(ATHLETE_ID).build();
+		Exercise exercise = Exercise.builder().id(EXERCISE_ID).build();
+		PersonalRecord pr = PersonalRecord.builder().id(PR_ID).exercise(exercise).athlete(athlete).build();
+		when(personalRecordRepositoryMock.personalRecordOfId(PR_ID)).thenReturn(pr);
+
+		service.newPersonalRecordForExercise(PR_ID, PR_DATE, PR_VALUE);
+
+		ArgumentCaptor<PersonalRecord> arg = ArgumentCaptor.forClass(PersonalRecord.class);
+		verify(personalRecordRepositoryMock, times(1)).personalRecordOfId(PR_ID);
+		verify(personalRecordRepositoryMock, times(1)).save(arg.capture());
+		verifyNoMoreInteractions(personalRecordRepositoryMock);
+
+		PersonalRecordAssert.assertThat(arg.getValue())
+				.hasId(PR_ID)
+				.hasDate(PR_DATE)
+				.hasValue(PR_VALUE)
+				.hasAthlete(athlete)
+				.hasExercise(exercise);
+	}
+
 }

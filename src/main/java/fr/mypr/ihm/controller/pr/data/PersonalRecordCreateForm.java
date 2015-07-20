@@ -1,4 +1,4 @@
-package fr.mypr.ihm.controller.data;
+package fr.mypr.ihm.controller.pr.data;
 
 import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -10,11 +10,8 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class PersonalRecordForm
+public class PersonalRecordCreateForm
 {
-
 	public static final String FIELD_VALUE = "value";
 	public static final String FIELD_DATE = "date";
 	public static final String FIELD_EXERCISE = "selectedExerciseId";

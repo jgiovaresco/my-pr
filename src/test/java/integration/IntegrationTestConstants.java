@@ -1,7 +1,6 @@
 package integration;
 
-import fr.mypr.identityaccess.domain.model.MyPrUserDetails;
-import fr.mypr.ihm.security.service.Role;
+import fr.mypr.ihm.security.*;
 
 public class IntegrationTestConstants
 {

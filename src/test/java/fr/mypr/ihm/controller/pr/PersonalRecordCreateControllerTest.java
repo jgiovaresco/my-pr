@@ -1,10 +1,10 @@
-package fr.mypr.ihm.controller;
+package fr.mypr.ihm.controller.pr;
 
 import fr.mypr.UnitTestWebConfiguration;
 import fr.mypr.ihm.WebConfiguration;
-import fr.mypr.ihm.controller.data.PersonalRecordForm;
+import fr.mypr.ihm.controller.pr.data.PersonalRecordCreateForm;
 import fr.mypr.pr.application.*;
-import fr.mypr.pr.application.data.*;
+import fr.mypr.pr.application.data.ExerciseData;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {UnitTestWebConfiguration.class, WebConfiguration.class})
 @WebAppConfiguration
-public class PersonalRecordControllerTest
+public class PersonalRecordCreateControllerTest
 {
 	private static final String EXERCISE_ID = "exId";
-	private static final String PR_DATE = "2015-06-24";
-	private static final String PR_VALUE = "130.0";
 
 	private MockMvc mockMvc;
 
@@ -69,19 +67,6 @@ public class PersonalRecordControllerTest
 	}
 
 	@Test
-	public void showPersonalRecords_should_render_personal_records_list() throws Exception
-	{
-		Collection<AthleteExercisePersonalRecordData> personalRecordData = new ArrayList<>();
-
-		when(personalRecordQueryServiceMock.personalRecordForAthlete(REGISTERED_USER.getEmail())).thenReturn(personalRecordData);
-
-		mockMvc.perform(get("/pr"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("/pr/list"))
-				.andExpect(model().attribute("personalRecords", is(sameInstance(personalRecordData))));
-	}
-
-	@Test
 	public void showPersonalRecordCreationForm_should_render_personal_record_creation_page_with_empty_form() throws Exception
 	{
 		Collection<ExerciseData> exerciseData = new ArrayList<>();
@@ -90,10 +75,10 @@ public class PersonalRecordControllerTest
 		mockMvc.perform(get("/pr/new"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("pr/creationForm"))
-				.andExpect(model().attribute(PersonalRecordForm.PR_ATTRIBUTE_FORM, allOf(
-						hasProperty(PersonalRecordForm.FIELD_DATE, isEmptyOrNullString()),
-						hasProperty(PersonalRecordForm.FIELD_VALUE, isEmptyOrNullString()),
-						hasProperty(PersonalRecordForm.FIELD_EXERCISE, isEmptyOrNullString())
+				.andExpect(model().attribute(PersonalRecordCreateForm.PR_ATTRIBUTE_FORM, allOf(
+						hasProperty(PersonalRecordCreateForm.FIELD_DATE, isEmptyOrNullString()),
+						hasProperty(PersonalRecordCreateForm.FIELD_VALUE, isEmptyOrNullString()),
+						hasProperty(PersonalRecordCreateForm.FIELD_EXERCISE, isEmptyOrNullString())
 				)))
 				.andExpect(model().attribute("exercises", is(sameInstance(exerciseData))));
 	}
@@ -103,48 +88,35 @@ public class PersonalRecordControllerTest
 	{
 		mockMvc.perform(post("/pr/new")
 				                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				                .sessionAttr(PersonalRecordForm.EXERCISES_ATTRIBUTE_FORM, new PersonalRecordForm())
+				                .sessionAttr(PersonalRecordCreateForm.PR_ATTRIBUTE_FORM, PersonalRecordCreateForm.builder().build())
 		)
 				.andExpect(status().isOk())
 				.andExpect(view().name("pr/creationForm"))
-				.andExpect(model().attribute(PersonalRecordForm.PR_ATTRIBUTE_FORM, allOf(
-						hasProperty(PersonalRecordForm.FIELD_DATE, isEmptyOrNullString()),
-						hasProperty(PersonalRecordForm.FIELD_VALUE, isEmptyOrNullString()),
-						hasProperty(PersonalRecordForm.FIELD_EXERCISE, isEmptyOrNullString())
+				.andExpect(model().attribute(PersonalRecordCreateForm.PR_ATTRIBUTE_FORM, allOf(
+						hasProperty(PersonalRecordCreateForm.FIELD_DATE, isEmptyOrNullString()),
+						hasProperty(PersonalRecordCreateForm.FIELD_VALUE, isEmptyOrNullString()),
+						hasProperty(PersonalRecordCreateForm.FIELD_EXERCISE, isEmptyOrNullString())
 				)))
 				.andExpect(model().attributeHasFieldErrors(
-						PersonalRecordForm.PR_ATTRIBUTE_FORM,
-						PersonalRecordForm.FIELD_DATE,
-						PersonalRecordForm.FIELD_VALUE,
-						PersonalRecordForm.FIELD_EXERCISE
+						PersonalRecordCreateForm.PR_ATTRIBUTE_FORM,
+						PersonalRecordCreateForm.FIELD_DATE,
+						PersonalRecordCreateForm.FIELD_VALUE,
+						PersonalRecordCreateForm.FIELD_EXERCISE
 				));
 	}
 
 	@Test
-	public void addNewPersonalRecord_should_render_personal_records_list_page_when_no_error() throws Exception
+	public void addNewPersonalRecord_should_create_personal_record_and_render_personal_records_list_page_when_no_error() throws Exception
 	{
 		mockMvc.perform(post("/pr/new")
 				                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				                .param(PersonalRecordForm.FIELD_DATE, PR_DATE)
-				                .param(PersonalRecordForm.FIELD_VALUE, PR_VALUE)
-				                .param(PersonalRecordForm.FIELD_EXERCISE, EXERCISE_ID)
-				                .sessionAttr(PersonalRecordForm.EXERCISES_ATTRIBUTE_FORM, new PersonalRecordForm())
+				                .param(PersonalRecordCreateForm.FIELD_DATE, "2015-06-24")
+				                .param(PersonalRecordCreateForm.FIELD_VALUE, "130")
+				                .param(PersonalRecordCreateForm.FIELD_EXERCISE, EXERCISE_ID)
+				                .sessionAttr(PersonalRecordCreateForm.PR_ATTRIBUTE_FORM, PersonalRecordCreateForm.builder().build())
 		)
 				.andExpect(status().isFound())
 				.andExpect(redirectedUrl("/pr"));
-	}
-
-	@Test
-	public void addNewPersonalRecord_should_create_personal_record_when_no_error() throws Exception
-	{
-		mockMvc.perform(post("/pr/new")
-				                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				                .param(PersonalRecordForm.FIELD_DATE, PR_DATE)
-				                .param(PersonalRecordForm.FIELD_VALUE, PR_VALUE)
-				                .param(PersonalRecordForm.FIELD_EXERCISE, EXERCISE_ID)
-				                .sessionAttr(PersonalRecordForm.EXERCISES_ATTRIBUTE_FORM, new PersonalRecordForm())
-		)
-				.andExpect(status().isFound());
 
 		verify(personalRecordApplicationServiceMock)
 				.newExercisePersonalRecordForAthlete(REGISTERED_USER.getEmail(), EXERCISE_ID, LocalDate.of(2015, 6, 24), 130.0f);

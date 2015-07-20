@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
 	<personal_records
+			id="1"
 			athlete_id="registered@user.com"
 			athlete_name="RegisteredUser User"
 			exercise_id="1"

@@ -30,4 +30,14 @@ public class SecurityUtil
 
 		log.info("User: {} has been logged in.", userDetails);
 	}
+
+	public static MyPrUserDetails principal()
+	{
+		MyPrUserDetails principal = null;
+		if (null != SecurityContextHolder.getContext().getAuthentication())
+		{
+			principal = ((MyPrUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		}
+		return principal;
+	}
 }

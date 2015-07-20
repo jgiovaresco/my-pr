@@ -1,14 +1,13 @@
-package fr.mypr.ihm.controller;
+package fr.mypr.ihm.controller.pr;
 
 
-import fr.mypr.identityaccess.domain.model.MyPrUserDetails;
-import fr.mypr.ihm.controller.data.PersonalRecordForm;
+import fr.mypr.ihm.controller.pr.data.PersonalRecordCreateForm;
+import fr.mypr.ihm.security.SecurityUtil;
 import fr.mypr.pr.application.*;
-import fr.mypr.pr.application.data.*;
+import fr.mypr.pr.application.data.ExerciseData;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,10 +17,10 @@ import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller
-@SessionAttributes({PersonalRecordForm.EXERCISES_ATTRIBUTE_FORM, PersonalRecordForm.EXERCISES_ATTRIBUTE_FORM})
+@SessionAttributes({PersonalRecordCreateForm.PR_ATTRIBUTE_FORM, PersonalRecordCreateForm.EXERCISES_ATTRIBUTE_FORM})
 @Slf4j
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class PersonalRecordController
+public class PersonalRecordCreateController
 {
 	protected static final String VIEW_NAME_PR_CREATION_PAGE = "pr/creationForm";
 
@@ -29,35 +28,23 @@ public class PersonalRecordController
 	private PersonalRecordApplicationService personalRecordApplicationService;
 	private ExerciseQueryService exerciseQueryService;
 
-	@RequestMapping(value = "/pr", method = RequestMethod.GET)
-	public String showPersonalRecords(Model model)
-	{
-		log.debug("Rendering personal records list page.");
-
-		String athleteId = ((MyPrUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-		Collection<AthleteExercisePersonalRecordData> personalRecordData = personalRecordQueryService.personalRecordForAthlete(athleteId);
-		model.addAttribute("personalRecords", personalRecordData);
-
-		return "/pr/list";
-	}
-
 	@RequestMapping(value = "/pr/new", method = RequestMethod.GET)
 	public String showPersonalRecordCreationForm(Model model)
 	{
 		log.debug("Rendering personal record creation form page.");
 
-		model.addAttribute(PersonalRecordForm.PR_ATTRIBUTE_FORM, new PersonalRecordForm());
+		model.addAttribute(PersonalRecordCreateForm.PR_ATTRIBUTE_FORM, PersonalRecordCreateForm.builder().build());
 
 		Collection<ExerciseData> exercises = exerciseQueryService.allExercises();
-		model.addAttribute("exercises", exercises);
+		model.addAttribute(PersonalRecordCreateForm.EXERCISES_ATTRIBUTE_FORM, exercises);
 
 		return VIEW_NAME_PR_CREATION_PAGE;
 	}
 
-
 	@RequestMapping(value = "/pr/new", method = RequestMethod.POST)
-	public String addNewPersonalRecord(@Valid @ModelAttribute(PersonalRecordForm.PR_ATTRIBUTE_FORM) PersonalRecordForm personalRecordData,
-	                                   BindingResult result)
+	public String addNewPersonalRecord(
+			@Valid @ModelAttribute(PersonalRecordCreateForm.PR_ATTRIBUTE_FORM) PersonalRecordCreateForm personalRecordData,
+			BindingResult result)
 	{
 		log.debug("Creating new pr with information: {}", personalRecordData);
 		if (result.hasErrors())
@@ -68,7 +55,7 @@ public class PersonalRecordController
 
 		log.debug("No validation errors found. Continuing personal creation process.");
 
-		String athleteId = ((MyPrUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+		String athleteId = SecurityUtil.principal().getUsername();
 		personalRecordApplicationService
 				.newExercisePersonalRecordForAthlete(athleteId,
 				                                     personalRecordData.getSelectedExerciseId(), personalRecordData.getDate(),

@@ -17,7 +17,7 @@
 				<tr th:each="pr : ${personalRecords}">
 					<td th:text="${pr.exerciseName}"></td>
 					<td th:text="${pr.value + ' ' + pr.exerciseUnit}"></td>
-					<td><a th:href="@{/pr/new(id=${pr.id})}">>new PR</a></td>
+					<td><a th:href="@{/pr/edit(prId=${pr.id})}">>new PR</a></td>
 				</tr>
 				</tbody>
 			</table>
