@@ -1,7 +1,6 @@
-package fr.mypr.ihm.security.service;
+package fr.mypr.ihm.security;
 
 import fr.mypr.identityaccess.application.IdentityApplicationService;
-import fr.mypr.identityaccess.domain.model.*;
 import fr.mypr.identityaccess.domain.model.User;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;

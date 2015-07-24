@@ -1,4 +1,4 @@
-package fr.mypr.ihm.security.service;
+package fr.mypr.ihm.security;
 
 
 import fr.mypr.identityaccess.application.IdentityApplicationService;
@@ -12,7 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.*;
 
 import static com.googlecode.catchexception.CatchException.*;
-import static fr.mypr.ihm.security.user.MyPrUserDetailsAssert.assertThat;
+import static fr.mypr.ihm.security.MyPrUserDetailsAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)

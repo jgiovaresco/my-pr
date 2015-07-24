@@ -1,11 +1,10 @@
 package fr.mypr.ihm.controller;
 
 
-import fr.mypr.identityaccess.application.IdentityApplicationService;
+import fr.mypr.identityaccess.application.*;
 import fr.mypr.identityaccess.command.RegisterUserCommand;
 import fr.mypr.identityaccess.domain.model.User;
-import fr.mypr.ihm.security.util.SecurityUtil;
-import fr.mypr.identityaccess.application.DuplicateEmailException;
+import fr.mypr.ihm.security.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

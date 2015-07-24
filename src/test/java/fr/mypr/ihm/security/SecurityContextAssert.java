@@ -1,8 +1,6 @@
-package fr.mypr.ihm.security.util;
+package fr.mypr.ihm.security;
 
-import fr.mypr.identityaccess.domain.model.*;
-import fr.mypr.identityaccess.domain.persistence.UserAccount;
-import fr.mypr.ihm.security.user.MyPrUserDetailsAssert;
+import fr.mypr.identityaccess.domain.model.User;
 import org.assertj.core.api.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;

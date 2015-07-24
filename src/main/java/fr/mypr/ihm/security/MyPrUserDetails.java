@@ -1,6 +1,5 @@
-package fr.mypr.identityaccess.domain.model;
+package fr.mypr.ihm.security;
 
-import fr.mypr.ihm.security.service.Role;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

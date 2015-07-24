@@ -1,7 +1,7 @@
 package integration.tests;
 
 import fr.mypr.MyPrApplication;
-import fr.mypr.identityaccess.domain.model.MyPrUserDetails;
+import fr.mypr.ihm.security.MyPrUserDetails;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

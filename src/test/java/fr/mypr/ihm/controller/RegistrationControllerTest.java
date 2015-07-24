@@ -5,7 +5,7 @@ import fr.mypr.identityaccess.application.*;
 import fr.mypr.identityaccess.command.RegisterUserCommand;
 import fr.mypr.identityaccess.domain.model.*;
 import fr.mypr.ihm.WebConfiguration;
-import fr.mypr.ihm.security.util.SecurityContextAssert;
+import fr.mypr.ihm.security.SecurityContextAssert;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.*;
 import org.junit.runner.RunWith;

@@ -1,7 +1,7 @@
 package fr.mypr.ihm;
 
 import fr.mypr.identityaccess.application.IdentityApplicationService;
-import fr.mypr.ihm.security.service.RepositoryUserDetailsService;
+import fr.mypr.ihm.security.RepositoryUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

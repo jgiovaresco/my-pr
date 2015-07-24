@@ -1,11 +1,9 @@
-package fr.mypr.ihm.security.user;
+package fr.mypr.ihm.security;
 
 
-import fr.mypr.identityaccess.domain.model.MyPrUserDetails;
-import fr.mypr.ihm.security.service.Role;
 import org.junit.Test;
 
-import static fr.mypr.ihm.security.user.MyPrUserDetailsAssert.assertThat;
+import static fr.mypr.ihm.security.MyPrUserDetailsAssert.assertThat;
 
 public class MyPrUserDetailsTest
 {

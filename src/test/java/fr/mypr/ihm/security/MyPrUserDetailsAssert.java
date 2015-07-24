@@ -1,7 +1,5 @@
-package fr.mypr.ihm.security.user;
+package fr.mypr.ihm.security;
 
-import fr.mypr.identityaccess.domain.model.MyPrUserDetails;
-import fr.mypr.ihm.security.service.Role;
 import org.assertj.core.api.*;
 import org.springframework.security.core.GrantedAuthority;
 

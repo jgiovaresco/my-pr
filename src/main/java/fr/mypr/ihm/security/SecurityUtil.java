@@ -1,7 +1,6 @@
-package fr.mypr.ihm.security.util;
+package fr.mypr.ihm.security;
 
-import fr.mypr.identityaccess.domain.model.*;
-import fr.mypr.ihm.security.service.Role;
+import fr.mypr.identityaccess.domain.model.User;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

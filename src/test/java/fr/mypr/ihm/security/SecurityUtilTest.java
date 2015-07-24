@@ -1,4 +1,4 @@
-package fr.mypr.ihm.security.util;
+package fr.mypr.ihm.security;
 
 import fr.mypr.identityaccess.domain.model.*;
 import org.junit.*;
