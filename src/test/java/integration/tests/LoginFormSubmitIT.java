@@ -2,7 +2,7 @@ package integration.tests;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import fr.mypr.*;
+import fr.mypr.MyPrApplication;
 import integration.IntegrationTestConstants;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -11,7 +11,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.*;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.*;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -85,7 +85,7 @@ public class LoginFormSubmitIT
 	}
 
 	@Test
-	public void login_should_redirect_to_index_page_when_correct_credentials() throws Exception
+	public void login_should_redirect_to_pr_list_page_when_correct_credentials() throws Exception
 	{
 		// @formatter:off
 		mockMvc.perform(
@@ -95,7 +95,7 @@ public class LoginFormSubmitIT
 				)
 //				.andDo(print())
 				.andExpect(status().isFound())
-				.andExpect(redirectedUrl("/"));
+				.andExpect(redirectedUrl("/pr"));
 		// @formatter:on
 	}
 }
