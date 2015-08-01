@@ -5,6 +5,7 @@ import com.github.springtestdbunit.annotation.*;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import fr.mypr.MyPrApplication;
 import fr.mypr.ihm.controller.pr.data.PersonalRecordEditForm;
+import integration.IntegrationTestConfig;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ActiveProfiles({"integrationTest"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {MyPrApplication.class})
+@SpringApplicationConfiguration(classes = {IntegrationTestConfig.class})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
                          TransactionalTestExecutionListener.class,
                          DbUnitTestExecutionListener.class})

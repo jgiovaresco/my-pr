@@ -3,7 +3,7 @@ package integration.tests;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import fr.mypr.MyPrApplication;
-import integration.IntegrationTestConstants;
+import integration.*;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ActiveProfiles({"integrationTest"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {MyPrApplication.class})
+@SpringApplicationConfiguration(classes = {IntegrationTestConfig.class})
 @WebAppConfiguration
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
                          TransactionalTestExecutionListener.class,

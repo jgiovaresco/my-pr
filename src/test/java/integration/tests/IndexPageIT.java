@@ -2,6 +2,7 @@ package integration.tests;
 
 import fr.mypr.MyPrApplication;
 import fr.mypr.ihm.security.MyPrUserDetails;
+import integration.IntegrationTestConfig;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ActiveProfiles({"integrationTest"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {MyPrApplication.class})
+@SpringApplicationConfiguration(classes = {IntegrationTestConfig.class})
 @WebAppConfiguration
 public class IndexPageIT
 {

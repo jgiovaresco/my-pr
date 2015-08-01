@@ -1,0 +1,16 @@
+apply plugin: 'liquibase'
+
+def liquibaseChangeLogFile = 'src/main/resources/liquibase/db.changelog.xml'
+def liquibaseContexts = 'db'
+
+liquibase {
+    activities {
+        dev {
+            changeLogFile liquibaseChangeLogFile
+            contexts liquibaseContexts
+            url 'jdbc:h2:file:/home/julien/DEV/perso/my-pr/db/my-pr'
+            username 'sa'
+            password 'sa'
+        }
+    }
+}

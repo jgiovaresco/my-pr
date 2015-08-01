@@ -5,7 +5,7 @@ import com.github.springtestdbunit.annotation.*;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import fr.mypr.MyPrApplication;
 import fr.mypr.ihm.controller.RegistrationForm;
-import integration.IntegrationTestConstants;
+import integration.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -26,11 +26,12 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles({"integrationTest"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {MyPrApplication.class})
+@SpringApplicationConfiguration(classes = {IntegrationTestConfig.class})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
                          TransactionalTestExecutionListener.class,
                          DbUnitTestExecutionListener.class})
@@ -241,6 +242,7 @@ public class RegistrationFormSubmitIT
 				                .param(RegistrationForm.FIELD_NAME_CONFIRM_PASSWORD, PASSWORD)
 				                .sessionAttr(RegistrationForm.SESSION_ATTRIBUTE_USER_FORM, new RegistrationForm())
 		)
+				.andDo(print())
 				.andExpect(status().isFound())
 				.andExpect(redirectedUrl("/"));
 	}

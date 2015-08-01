@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+	<changeSet id="0.0.1" author="jgi" context="db">
+		<createTable tableName="USER_ACCOUNT">
+			<column name="ID" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="EMAIL" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="PASSWORD" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="FIRST_NAME" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="LAST_NAME" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+</databaseChangeLog>

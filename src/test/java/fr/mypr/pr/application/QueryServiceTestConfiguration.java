@@ -1,5 +1,6 @@
 package fr.mypr.pr.application;
 
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.embedded.*;
 
@@ -26,7 +27,14 @@ public class QueryServiceTestConfiguration
 	{
 		return new EmbeddedDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)
-				.addScript("classpath:/schema-readModel.sql")
 				.build();
+	}
+	@Bean
+	public SpringLiquibase liquibase(DataSource dataSource)
+	{
+		SpringLiquibase springLiquibase = new SpringLiquibase();
+		springLiquibase.setDataSource(dataSource);
+		springLiquibase.setChangeLog("classpath:liquibase/db.changelog.xml");
+		return springLiquibase;
 	}
 }
