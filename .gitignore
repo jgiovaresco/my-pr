@@ -2,7 +2,7 @@
 ### My-Pr
 
 db/
-src/main/resources/import.sql
+src/mypr/resources/import.sql
 
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion
