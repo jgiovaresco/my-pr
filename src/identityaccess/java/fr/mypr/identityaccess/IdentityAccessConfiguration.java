@@ -1,4 +1,4 @@
-package fr.mypr;
+package fr.mypr.identityaccess;
 
 import org.springframework.context.annotation.*;
 import org.springframework.security.crypto.password.*;
