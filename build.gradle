@@ -30,6 +30,36 @@ jar {
     version = '0.0.1-SNAPSHOT'
 }
 
+springBoot {
+    mainClass = 'fr.mypr.MyPrApplication'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/identityaccess/java'
+            srcDir 'src/pr/java'
+            srcDir 'src/mypr/java'
+        }
+        resources {
+            srcDir 'src/identityaccess/resources'
+            srcDir 'src/pr/resources'
+            srcDir 'src/mypr/resources'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/identityaccess_test/java'
+            srcDir 'src/pr_test/java'
+            srcDir 'src/mypr_test/java'
+        }
+        resources {
+            srcDir 'src/identityaccess_test/resources'
+            srcDir 'src/pr_test/resources'
+            srcDir 'src/mypr_test/resources'
+        }
+    }
+}
 
 repositories {
     mavenCentral()
